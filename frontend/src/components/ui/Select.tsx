@@ -7,7 +7,7 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
 
 const Select: React.FC<SelectProps> = ({ id, label, children }) => {
     return (
-        <div>
+        <div  className="flex flex-col">
             <label htmlFor={id}>{label}</label>
             <select id={id} className="border rounded-md border-gray-300 text-gray-500 text-sm p-2.5">
                 {children}
