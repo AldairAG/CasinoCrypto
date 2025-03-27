@@ -9,4 +9,5 @@ export const USER_ROUTES = {
     RETIRAR: '/c/retirar',
     WALLET_LIST: '/c/wallet-list',
     CREAR_WALLET: '/c/crear-wallet',
+    USER_PROFILE:'/c/user-profile',
 } as const;

@@ -6,6 +6,7 @@ import QuienielaArmar from "../pages/QuinielaArmar";
 import Carrito from "../pages/Carrito";
 import DepositarForm from "../components/forms/DepositarForm";
 import CreateWallet from "../components/forms/CreateWallet";
+import UserProfile from '../pages/UserPages/UserProfile';
 
 const UserLayout = () => {
     return (
@@ -14,6 +15,7 @@ const UserLayout = () => {
 
             <div className="flex justify-center">
                 <Switch>
+                    <Route path={USER_ROUTES.USER_PROFILE} component={UserProfile} />
                     <Route path={USER_ROUTES.QUINIELAS_LIST} component={Quinielas} />
                     <Route path={USER_ROUTES.QUINIELA} component={QuienielaArmar} />
                     <Route path={USER_ROUTES.CARRITO} component={CreateWallet} />

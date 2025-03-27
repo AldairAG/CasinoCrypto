@@ -18,7 +18,7 @@ const Header = () => {
             </div>
             <div className="flex bg-gray-300 items-center justify-center">
                 <span className="px-6 py-3 font-semibold py border-b-2 border-red-600">Deportes</span>
-                <span className="px-6 py-3 font-semibold py">Casino</span>
+                <span onClick={()=> navigateTo(USER_ROUTES.USER_PROFILE)}className="px-6 py-3 font-semibold py">Casino</span>
                 <span onClick={() => navigateTo(USER_ROUTES.QUINIELAS_LIST)} className="px-6 py-3 font-semibold py ">Quinielas</span>
             </div>
 
