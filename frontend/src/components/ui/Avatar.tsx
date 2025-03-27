@@ -6,30 +6,28 @@ import { WalletIcon } from "@heroicons/react/24/outline";
 import { PowerIcon } from "@heroicons/react/24/outline";
 import { CalendarIcon } from "@heroicons/react/24/outline";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
-
 import { ChatBubbleBottomCenterTextIcon } from "@heroicons/react/24/outline";
-
-
-
-
 
 const Avatar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
         <div className="relative border border-gray-300 rounded-md px-3 flex items-center gap-3"
-            onClick={() => setIsOpen(!isOpen)}
+        onMouseEnter={() => setIsOpen(true)}
+        onMouseLeave={() => setIsOpen(false)}
         >
             <div className='flex w-8'>
                 <img src={img} alt="user" />
             </div>
             <label className='font-semibold'>$ 0.00</label>
             <ChevronDownIcon className="h-5 w-5 text-gray-500 stroke-2" />
-
+            
             {isOpen && (
+                <>
+                <div className=' absolute h-12 right-0 mt-2 w-40'></div>
                 <div
                     className="absolute py-2 px-4 top-full right-0 mt-2 w-100 bg-white shadow-lg rounded-md border
-                     border-gray-200 space-y-2">
+                     border-gray-200 space-y-2 z-2">
                     <div className='flex flex-col'>
                         <span className='font-semibold text-gray-500 text-xl'>Usuario1</span>
                         <span className='font-semibold text-gray-400 text-sm'>eemail@gmail.com</span>
@@ -79,6 +77,7 @@ const Avatar = () => {
                     </ul>
 
                 </div>
+                </>
             )}
         </div>
     )
