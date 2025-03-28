@@ -8,8 +8,13 @@ import { CalendarIcon } from "@heroicons/react/24/outline";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import { ChatBubbleBottomCenterTextIcon } from "@heroicons/react/24/outline";
 
+import { USER_ROUTES } from '../../constants/ROUTERS';
+import { useUser } from '../../hooks/useUser'
+
 const Avatar = () => {
     const [isOpen, setIsOpen] = useState(false);
+
+    const { navigateTo } = useUser()
 
     return (
         <div className="relative border border-gray-300 rounded-md px-3 flex items-center gap-3"
@@ -38,7 +43,7 @@ const Avatar = () => {
                     </div>
 
                     <ul className=" text-sm text-gray-700 space-y-2 bg-gray-200 rounded-md">
-                        <li className="flex ps-6 space-x-2 items-center hover:bg-gray-100 py-4 px-2 rounded-md">
+                        <li onClick={()=> navigateTo(USER_ROUTES.USER_PROFILE)} className="flex ps-6 space-x-2 items-center hover:bg-gray-100 py-4 px-2 rounded-md" >
                             <UserCircleIcon className="h-6 w-6 text-gray-500" />
                             <label className='font-semibold '>Perfil</label>
                         </li>

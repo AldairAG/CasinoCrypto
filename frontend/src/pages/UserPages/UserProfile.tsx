@@ -47,14 +47,11 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveTab }) => {
 };
 
 // Tabs Component
-
 const Tabs: React.FC<TabsProps> = ({ activeTab, setActiveTab }) => {
-
-    
- const tabs = [
+  const tabs = [
     { id: "profile", label: "Profile", icon: "profile" as IconName },
     { id: "dashboard", label: "Confirmaccion de identidad", icon: "dashboard" as IconName },
-    { id: "settings", label: "Settings", icon: "settings" as IconName },
+    { id: "verification", label: "Verificacion de dos factores", icon: "verification" as IconName },
     { id: "password", label: "Cambiar email y password", icon: "password" as IconName },
   ];
 
@@ -65,11 +62,10 @@ const Tabs: React.FC<TabsProps> = ({ activeTab, setActiveTab }) => {
           <li key={tab.id} className="mr-2">
             <button
               onClick={() => setActiveTab(tab.id)}
-              className={`p-4 border-b-2 transition flex items-center ${
-                activeTab === tab.id
+              className={`p-4 border-b-2 transition flex items-center ${activeTab === tab.id
                   ? "text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500"
                   : "border-transparent hover:text-gray-600 dark:hover:text-gray-300"
-              }`}
+                }`}
             >
               <span className="mr-2">{icons[tab.icon]}</span>
               {tab.label}
@@ -86,68 +82,68 @@ const Tabs: React.FC<TabsProps> = ({ activeTab, setActiveTab }) => {
 // User Profile Content
 const ProfileContent: React.FC = () => (
 
-<div className="p-4">
-<h2 className="text-xl font-semibold  dark:text-white mb-4">
-  Perfil de Usuario
-</h2>
-{/* Grid con 3 columnas */}
-<div className="grid grid-cols-3 gap-4">
-  <Input
-    id="username"
-    label= "Nombre de usuario*"
-    
-    value="Juan123"
-    readOnly
-    className="bg-gray-100 cursor-not-allowed"
-  />
-  <Input
-    id="email"
-    label="Email@"
-    value="juan@example.com"
-    readOnly
-    className="bg-gray-100 cursor-not-allowed"
-  />
-  <Input
-    id="phone"
-    label="Teléfono"
-    value= '1234567891'
-   
-  />
-  <Input
-    id="firstName"
-    label="Nombre*"
-    value="Juan"
-    readOnly
-    className="bg-gray-100 cursor-not-allowed dark:text-white"
-  />
-  <Input
-    id="lastName"
-    label="Apellidos"
-    value="Pérez"
-    readOnly
-    className="bg-gray-100 cursor-not-allowed"
-  />
-  <Input
-    id="dob"
-    label= "Fecha de nacimiento*"
-    type="date"
-    value="1990-01-01"
-    readOnly
-    className="bg-gray-100 cursor-not-allowed"
-  />
-</div>
+  <div className="p-4">
+    <h2 className="text-xl font-semibold  dark:text-white mb-4">
+      Perfil de Usuario
+    </h2>
+    {/* Grid con 3 columnas */}
+    <div className="grid grid-cols-3 gap-4">
+      <Input
+        id="username"
+        label="Nombre de usuario*"
 
-{/* Botón de guardar */}
-<div className="mt-4">
-  <Boton color="bg-blue-800">Guardar</Boton>
-</div>
-</div>
+        value="Juan123"
+        readOnly
+        className="bg-gray-100 cursor-not-allowed"
+      />
+      <Input
+        id="email"
+        label="Email@"
+        value="juan@example.com"
+        readOnly
+        className="bg-gray-100 cursor-not-allowed"
+      />
+      <Input
+        id="phone"
+        label="Teléfono"
+        value='1234567891'
+
+      />
+      <Input
+        id="firstName"
+        label="Nombre*"
+        value="Juan"
+        readOnly
+        className="bg-gray-100 cursor-not-allowed dark:text-white"
+      />
+      <Input
+        id="lastName"
+        label="Apellidos"
+        value="Pérez"
+        readOnly
+        className="bg-gray-100 cursor-not-allowed"
+      />
+      <Input
+        id="dob"
+        label="Fecha de nacimiento*"
+        type="date"
+        value="1990-01-01"
+        readOnly
+        className="bg-gray-100 cursor-not-allowed"
+      />
+    </div>
+
+    {/* Botón de guardar */}
+    <div className="mt-4">
+      <Boton color="bg-blue-800">Guardar</Boton>
+    </div>
+  </div>
 );
 
 // Dashboard Content
 const DashboardContent: React.FC = () => (
 
-    <div className="p-6 max-w-md mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800">
+  <div className="p-6 max-w-md mx-auto bg-white rounded-lg shadow-md dark:bg-gray-800">
     <p className="text-gray-700 dark:text-gray-300 mb-6">
       <span className=" font-bold ">Seleccione y suba los documentos correspondientes, se requiere un comprobante de domicilio y un tipo de DNI</span>
     </p>
@@ -198,16 +194,16 @@ const DashboardContent: React.FC = () => (
     </div>
   </div>
 
-    
-  
+
+
 );
 
 
 // Password Content
 const PasswordContent: React.FC = () => (
-    <div className="p-4">
-    
-    
+  <div className="p-4">
+
+
     <div className="space-y-4">
       <div>
         <label htmlFor="email" className="block text-sm font-bold text-gray-700 dark:text-gray-300">
@@ -267,14 +263,55 @@ const PasswordContent: React.FC = () => (
       </Boton>
     </div>
   </div>
-  );
+);
 
-// Settings Content
-const SettingsContent: React.FC = () => (
-  <div className="p-4">
-    <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Settings</h2>
-    <p className="mt-2 text-gray-600 dark:text-gray-300">Configure your preferences here.</p>
+
+// Verification Content
+const VerificationContent: React.FC = () => (
+  
+
+
+
+  <div className="p-6 max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md">
+    <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
+      Verificación de dos factores
+    </h2>
+
+    <div className="space-y-4">
+      <div>
+        <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
+          Ingrese su correo electrónico para recibir un código de verificación
+        </p>
+        <Input
+          id="email"
+          type="email"
+          placeholder="example@gmail.com"
+          className="dark:bg-gray-700 dark:text-white dark:border-gray-600"
+        />
+      </div>
+
+      <div>
+        <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
+          Código
+        </p>
+        <Input
+  id="code"
+  type="number"
+  placeholder="123456"
+  className="dark:bg-gray-700 dark:text-white dark:border-gray-600 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+  pattern="[0-9]*"
+  inputMode="numeric"
+/>
+      </div>
+
+      <Boton
+        className="w-full bg-blue-10000 hover:bg-blue-900 text-white font-medium py-2 px-4 rounded-md dark:bg-blue-900 dark:hover:bg-blue-800 transition-colors"
+      >
+        Verificar
+      </Boton>
+    </div>
   </div>
+
 );
 
 // Main User Profile Page
@@ -282,17 +319,16 @@ const UserProfile: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("profile");
 
   return (
-    <div className="flex heigth:0vh bg-gray-100 dark:bg-gray-900">
+    //Preguntar si esta bien el layout
+    <div className="flex flex-col md:flex-row h-full w-full max-w-[1600px] gap-4 p-4 bg-gray-100 dark:bg-gray-900 flex-1/3">
       <Sidebar setActiveTab={setActiveTab} />
       <div className="flex-1 p-6">
         <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
         <div className="mt-6 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
           {activeTab === "profile" && <ProfileContent />}
           {activeTab === "dashboard" && <DashboardContent />}
-          {activeTab === "settings" && <SettingsContent />}
-          {activeTab === "password" && <PasswordContent/>}
-
-
+          {activeTab === "verification" && <VerificationContent />}
+          {activeTab === "password" && <PasswordContent />}
         </div>
       </div>
     </div>
