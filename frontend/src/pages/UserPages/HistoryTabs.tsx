@@ -11,10 +11,11 @@ const HistoryTabs: React.FC<HistoryTabsProps> = ({
   setActiveSubTab 
 }) => {
   // Solo las nuevas tabs para historial
+  ///cambiar el id para cambiar a una nueva tabs asi como su icono asignado
   const historyTabs = [
-    { id: "operations", label: "Operaciones", icon: "operation" as IconName },
-    { id: "payments", label: "Pagos", icon: "payment" as IconName },
-    { id: "movements", label: "Movimientos", icon: "movement" as IconName },
+    { id: "operations", label: "Casino", icon: "operation" as IconName },
+    { id: "quinela", label: "Quinela", icon: "movement" as IconName },
+    { id: "payment", label: "Apuestas", icon: "payment" as IconName },
   ];
 
   return (

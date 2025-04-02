@@ -2,42 +2,49 @@ import Input from "../../components/ui/Input";
 import Boton from "../../components/ui/Boton";
 
 export const VerificationContent: React.FC = () => (
-  <div className="p-6 max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md">
-    <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">
+  <div className="w-full p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+    <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4">
       Verificación de dos factores
     </h2>
+    
+    <p className="text-base text-gray-600 dark:text-gray-400 mb-6">
+      Por seguridad, enviaremos un código de verificación a tu correo electrónico.
+      Ingresa tanto tu email como el código recibido para completar el proceso.
+    </p>
 
-    <div className="space-y-4">
-      <div>
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
-          Ingrese su correo electrónico para recibir un código de verificación
-        </p>
+    <div className="flex flex-col md:flex-row gap-4 mb-6">
+      <div className="flex-1">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          Correo electrónico
+        </label>
         <Input
           id="email"
           type="email"
-          placeholder="example@gmail.com"
-          className="dark:bg-gray-700 dark:text-white dark:border-gray-600"
+          placeholder="tucorreo@ejemplo.com"
+          className="w-full dark:bg-gray-700 dark:text-white dark:border-gray-600"
         />
       </div>
 
-      <div>
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
-          Código
-        </p>
+      <div className="flex-1">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          Código de verificación
+        </label>
         <Input
           id="code"
           type="number"
           placeholder="123456"
-          className="dark:bg-gray-700 dark:text-white dark:border-gray-600 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+          className="w-full dark:bg-gray-700 dark:text-white dark:border-gray-600"
           pattern="[0-9]*"
           inputMode="numeric"
         />
       </div>
+    </div>
 
+    <div className="flex justify-center">
       <Boton
-        className="w-full bg-blue-10000 hover:bg-blue-900 text-white font-medium py-2 px-4 rounded-md dark:bg-blue-900 dark:hover:bg-blue-800 transition-colors"
+        className="px-8 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md dark:bg-blue-800 dark:hover:bg-blue-700 transition-colors"
       >
-        Verificar
+        Verificar Identidad
       </Boton>
     </div>
   </div>
