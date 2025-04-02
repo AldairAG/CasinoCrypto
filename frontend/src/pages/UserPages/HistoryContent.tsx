@@ -1,5 +1,5 @@
-import OperationsContent from  "./OperationsContent";
-import PaymentsContent from "./PaymentsContent";
+import CasinoContent from  "./CasinoContent";
+import ApuestasContent from "./ApuestasContent";
 import QuinelaContent from "./QuinelaContent";
 
 interface HistoryContentProps {
@@ -8,14 +8,14 @@ interface HistoryContentProps {
 //Menu para las secciuones de historial en el tabs
 const HistoryContent: React.FC<HistoryContentProps> = ({ subTab }) => {
   switch (subTab) {
-    case "operations":
-      return <OperationsContent />;
-    case "payment":
-      return <PaymentsContent />;
+    case "casino":
+      return <CasinoContent />;
+    case "apuesta":
+      return <ApuestasContent />;
     case "quinela":
       return <QuinelaContent />;
     default:
-      return <OperationsContent />;
+      return <CasinoContent />;
   }
 };
 
