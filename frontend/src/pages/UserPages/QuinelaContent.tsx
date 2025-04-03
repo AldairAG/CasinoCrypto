@@ -5,10 +5,10 @@ import FiltersQuinela from '../../components/ui/FiltersQuinela';
 
 const QuinelaContent:React.FC = () => {
   const allMovements = [
-    { id: 1, type: 'Depósito', amount: 1500, date: '2023-11-01', status: 'completed', quinela: 'Quinela 1', result: 'Ganado' },
-    { id: 2, type: 'Retiro', amount: -500, date: '2023-11-05', status: 'completed', quinela: 'Quinela 2', result: 'Perdido' },
-    { id: 3, type: 'Transferencia', amount: -200, date: '2023-11-10', status: 'pending', quinela: 'Quinela 3', result: 'Pendiente' },
-    { id: 4, type: 'Depósito', amount: 1000, date: '2023-11-15', status: 'completed', quinela: 'Quinela Especial', result: 'Ganado' },
+    { id: 1, type: 'Ganancia', amount: 1500, date: '2023-11-01', status: 'completed', quinela: 'Quinela 1', result: 'Ganado' },
+    { id: 2, type: 'Pago', amount: -500, date: '2023-11-05', status: 'pending', quinela: 'Quinela 2', result: 'Pendiente' },
+    { id: 3, type: 'Pago', amount: -200, date: '2023-11-10', status: 'pending', quinela: 'Quinela 3', result: 'Pendiente' },
+    { id: 4, type: 'Ganancia', amount: 1000, date: '2023-11-15', status: 'completed', quinela: 'Quinela Especial', result: 'Ganado' },
   ];
 
   const [filteredMovements, setFilteredMovements] = useState(allMovements);

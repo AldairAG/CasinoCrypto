@@ -30,7 +30,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     {
       id: "history",
       label: "Historial",
-      icon: "history" as IconName,
+      icon: "historial" as IconName,
     },
     { id: "faq", label: "FAQ", icon: "faq" as IconName },
     { id: "support", label: "Soporte", icon: "support" as IconName },
@@ -41,7 +41,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     {
       id: "bets",
       label: "Apuestas",
-      icon: "quest" as IconName,
+      icon: "apuestas" as IconName,
       contentTab: "history_bets" // Nueva propiedad para definir qué tab mostrar
     },
     {
@@ -78,11 +78,11 @@ const Sidebar: React.FC<SidebarProps> = ({
                   <span className="ml-auto">
                     {showHistorySubmenu ? (
                       <span className="text-gray-500 dark:text-gray-400">
-                        {icons.historyClose} {/* icono del historial */}
+                        {icons.arrow1} {/* icono del historial */}
                       </span>
                     ) : (
                       <span className="text-gray-500 dark:text-gray-400">
-                        {icons.historyOpen} {/* icono del historial*/}
+                        {icons.arrow2} {/* icono del historial*/}
                       </span>
                     )}
                   </span>

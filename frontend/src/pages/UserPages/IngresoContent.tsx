@@ -7,7 +7,7 @@ const IngresoContent: React.FC = () => {
   const allIngresos = [
     { 
       id: 1, 
-      concepto: 'Pago de cliente', 
+      concepto: 'BTC', 
       monto: 2500, 
       fecha: '2023-11-01', 
       hora: '10:30 AM',
@@ -15,7 +15,7 @@ const IngresoContent: React.FC = () => {
     },
     { 
       id: 2, 
-      concepto: 'Venta de productos', 
+      concepto: 'ETH', 
       monto: 1800, 
       fecha: '2023-11-05', 
       hora: '02:15 PM',
@@ -23,7 +23,7 @@ const IngresoContent: React.FC = () => {
     },
     { 
       id: 3, 
-      concepto: 'Reembolso', 
+      concepto: 'BTC', 
       monto: 500, 
       fecha: '2023-11-10', 
       hora: '09:45 AM',
@@ -31,7 +31,7 @@ const IngresoContent: React.FC = () => {
     },
     { 
       id: 4, 
-      concepto: 'Ingreso extra', 
+      concepto: 'Solana', 
       monto: 1200, 
       fecha: '2023-11-15', 
       hora: '04:20 PM',

@@ -1,4 +1,4 @@
-// components/ui/IngresoItem.tsx
+// IngresoItem.tsx
 import React from 'react';
 
 type IngresoItemProps = {

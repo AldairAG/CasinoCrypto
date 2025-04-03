@@ -2,6 +2,7 @@ import { useState } from "react";
 import TextAreaInput from "../../components/ui/TextAreaInput";
 import SelectableList from "../../components/ui/SelectableList";
 import Boton from "../../components/ui/Boton";
+import Icon from "../../components/ui/Icon"; // Importa el componente Icon
 
 const SupportContent: React.FC = () => {
   const [selectedProblem, setSelectedProblem] = useState<string>("");
@@ -60,7 +61,10 @@ const SupportContent: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold dark:text-white mb-6">Soporte</h1>
+      <div className="flex items-center mb-6 gap-2">
+        <Icon name="support" className="text-blue-600 dark:text-blue-400 w-6 h-6" />
+        <h1 className="text-3xl font-bold dark:text-white">Soporte</h1>
+      </div>
       
       <p className="text-gray-600 dark:text-gray-300 mb-6">
         Seleccione el problema que más se acerque al que presenta

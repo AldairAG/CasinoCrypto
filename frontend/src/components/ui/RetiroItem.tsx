@@ -8,6 +8,7 @@ type RetiroItemProps = {
   monedaCrypto: string;
   equivalenciaUSD: number;
   estado: string;
+  concepto: string; // Opcional, si se necesita en el futuro
 };
 
 const RetiroItem: React.FC<RetiroItemProps> = ({ 
@@ -16,7 +17,8 @@ const RetiroItem: React.FC<RetiroItemProps> = ({
   monto, 
   monedaCrypto, 
   equivalenciaUSD,
-  estado 
+  estado,
+  concepto
 }) => {
   const getEstadoColor = () => {
     switch(estado) {
@@ -48,18 +50,20 @@ const RetiroItem: React.FC<RetiroItemProps> = ({
     <div className="flex items-center justify-between p-3 bg-white dark:bg-gray-600 rounded-md shadow-sm">
       <div>
         <p className="font-bold text-lg dark:text-white">
-          {monto} {monedaCrypto}
+          {concepto} 
         </p>
         <p className="text-base text-gray-500 dark:text-gray-300 font-medium">
           {fecha} - {hora}
         </p>
         <p className="text-base text-gray-500 dark:text-gray-300 font-medium">
-          ≈ ${equivalenciaUSD.toLocaleString()} USD
+        ≈ {monto.toLocaleString()} {monedaCrypto}
+
         </p>
       </div>
       <div className="text-right">
         <p className="font-bold text-lg text-red-600 dark:text-red-400">
-          -{monto.toLocaleString()} {monedaCrypto}
+        {/* -{monedaCrypto.toLocaleString()} {monto} */}
+          - ${equivalenciaUSD.toLocaleString()} USD
         </p>
         <span className={`text-sm font-semibold ${getEstadoColor()}`}>
           {getEstadoText()}

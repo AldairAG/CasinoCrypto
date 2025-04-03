@@ -12,7 +12,8 @@ const RetiroContent: React.FC = () => {
       monto: 0.5, 
       monedaCrypto: 'BTC', 
       equivalenciaUSD: 15000,
-      estado: 'completado' 
+      estado: 'completado' ,
+      concepto: 'Retiro de BTC' 
     },
     { 
       id: 2, 
@@ -21,16 +22,18 @@ const RetiroContent: React.FC = () => {
       monto: 10, 
       monedaCrypto: 'ETH', 
       equivalenciaUSD: 18000,
-      estado: 'pendiente' 
+      estado: 'pendiente' ,
+      concepto: 'Retiro de SOLANA'
     },
     { 
       id: 3, 
       fecha: '2023-11-12', 
       hora: '09:15 AM',
       monto: 500, 
-      monedaCrypto: 'USDT', 
+      monedaCrypto: 'ETH', 
       equivalenciaUSD: 500,
-      estado: 'cancelado' 
+      estado: 'cancelado' ,
+      concepto: 'Retiro de ETC'
     },
     { 
       id: 4, 
@@ -39,7 +42,8 @@ const RetiroContent: React.FC = () => {
       monto: 2.5, 
       monedaCrypto: 'SOL', 
       equivalenciaUSD: 250,
-      estado: 'completado' 
+      estado: 'completado' ,
+      concepto: 'Retiro de BTC'
     },
   ];
 
@@ -72,6 +76,7 @@ const RetiroContent: React.FC = () => {
                 monedaCrypto={retiro.monedaCrypto}
                 equivalenciaUSD={retiro.equivalenciaUSD}
                 estado={retiro.estado}
+                concepto={retiro.concepto}
               />
             ))
           ) : (

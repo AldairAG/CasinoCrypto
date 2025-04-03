@@ -9,7 +9,7 @@ const GananciaContent: React.FC = () => {
       id: 1, 
       fecha: '2023-11-03', 
       hora: '09:15 AM',
-      concepto: 'Ganancia por inversión', 
+      concepto: 'Ganancia por Quinela', 
       monto: 1200,
       estado: 'acreditado' 
     },
@@ -17,7 +17,7 @@ const GananciaContent: React.FC = () => {
       id: 2, 
       fecha: '2023-11-08', 
       hora: '02:45 PM',
-      concepto: 'Dividendos', 
+      concepto: 'Ganancia por Apuestas', 
       monto: 350,
       estado: 'acreditado' 
     },
@@ -25,7 +25,7 @@ const GananciaContent: React.FC = () => {
       id: 3, 
       fecha: '2023-11-14', 
       hora: '11:30 AM',
-      concepto: 'Recompensas staking', 
+      concepto: 'Ganancia por Quinela', 
       monto: 75,
       estado: 'pendiente' 
     },
@@ -33,7 +33,7 @@ const GananciaContent: React.FC = () => {
       id: 4, 
       fecha: '2023-11-20', 
       hora: '04:10 PM',
-      concepto: 'Ganancia trading', 
+      concepto: 'Ganancia por Apuestas', 
       monto: 1800,
       estado: 'acreditado' 
     },
