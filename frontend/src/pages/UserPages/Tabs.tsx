@@ -37,3 +37,103 @@ export const Tabs: React.FC<TabsProps> = ({ activeTab, setActiveTab }) => {
   );
 };
 export default Tabs;
+
+
+/* <div>
+<Tabs defaultValue={'citas'}>
+    <TabsList className="mb-4">
+        <TabsTrigger value="citas">Calendario</TabsTrigger>
+        <TabsTrigger value="busqueda">Buscar</TabsTrigger>
+    </TabsList>
+
+    <TabsContent value="citas">
+        <div className="grid gap-6 md:grid-cols-[300px_1fr]">
+            <Card className={'space-y-2'}>
+                <CardHeader>Calendario</CardHeader>
+                <div>
+                    <Calendar
+                        mode="single"
+                        selected={selectedDate}
+                        onSelect={setSelectedDate}
+                        locale={es} />
+                </div>
+            </Card>
+
+            <Card>
+                <CardHeader>Citas para {format(selectedDate, "PPP", { locale: es })}</CardHeader>
+
+                <div>
+
+                    <p className="text-muted-foreground">No hay citas programadas para esta fecha.</p>
+
+                </div>
+            </Card>
+        </div>
+    </TabsContent>
+
+    <TabsContent value="busqueda">
+        <Card>
+            <CardHeader>
+                <CardHeader>Buscar Paciente</CardHeader>
+                <CardDescription>Busque por nombre o número telefónico</CardDescription>
+            </CardHeader>
+            <div className="space-y-6">
+                <div>
+                    <label htmlFor="search">Buscar</label>
+                    <InputWhite
+                        id="search"
+                        placeholder="Nombre o teléfono"
+
+                    />
+                </div>
+
+
+                <p className="text-muted-foreground">No se encontraron resultados.</p>
+
+
+            </div>
+        </Card>
+    </TabsContent>
+</Tabs>
+</div> */
+
+/* import React, { useState } from "react";
+import { twMerge } from "tailwind-merge";
+
+/* eslint-disable react/prop-types 
+const Tabs = ({ defaultValue, children, className }) => {
+    const [activeTab, setActiveTab] = useState(defaultValue);
+
+    return (
+        <div className={twMerge("w-full", className)}>
+            {children.map((child) =>
+                child.type === TabsList
+                    ? React.cloneElement(child, { activeTab, setActiveTab })
+                    : React.cloneElement(child, { activeTab })
+            )}
+        </div>
+    );
+};
+
+const TabsList = ({ children, activeTab, setActiveTab, className }) => (
+    <div className={twMerge("mb-6 flex border-b", className)}>
+        {children.map((child) =>
+            React.cloneElement(child, { activeTab, setActiveTab })
+        )}
+    </div>
+);
+
+const TabsTrigger = ({ value, children, activeTab, setActiveTab, className }) => (
+    <button
+        className={twMerge(`px-4 py-2 border-b-2 ${activeTab === value ? "border-blue-500 font-bold" : "border-transparent"
+            }`,className)}
+        onClick={() => setActiveTab(value)}
+    >
+        {children}
+    </button>
+);
+
+const TabsContent = ({ value, activeTab, children, className }) =>
+    activeTab === value ? <div className={twMerge("mt-4",className)}>{children}</div> : null;
+
+export { Tabs, TabsList, TabsTrigger, TabsContent }; */
