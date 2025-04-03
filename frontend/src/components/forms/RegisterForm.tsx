@@ -1,3 +1,5 @@
+import { ADMIN_ROUTES } from "../../constants/ROUTERS";
+import { useUser } from "../../hooks/useUser";
 import Boton from "../ui/Boton";
 import DateSelector from "../ui/DateSelector";
 import Input from "../ui/Input";
@@ -16,6 +18,8 @@ const formulario = [
 
 
 const RegisterForm = () => {
+        const {navigateTo}=useUser()
+    
     return (
         <form action="" className="bg-gray-50 p-4 flex flex-col gap-4 w-md text-center rounded-sm">
             <WaveText text={'CasiNova'} classname="text-red-500 text-5xl" />
@@ -36,7 +40,7 @@ const RegisterForm = () => {
 
 
 
-            <Boton>Crear cuenta</Boton>
+            <Boton onClick={()=>navigateTo(ADMIN_ROUTES.ADMIN_LAYOUT)}>Crear cuenta</Boton>
 
             <h5>¿Aun no tienes una cuenta? <span className="text-blue-400">Registrate aqui</span></h5>
         </form>

@@ -1,6 +1,6 @@
-import Boton from "../components/ui/Boton";
-import { USER_ROUTES } from "../constants/ROUTERS";
-import { useUser } from "../hooks/useUser";
+import Boton from "../../components/ui/Boton";
+import { USER_ROUTES } from "../../constants/ROUTERS";
+import { useUser } from "../../hooks/useUser";
 
 const quineilas = [
     { hora: '1d 1h', titulo: 'Copa del Rey - Semifinales', partidos: 15, premio: 100000, participantes: 18920 },

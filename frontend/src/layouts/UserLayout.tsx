@@ -1,9 +1,9 @@
 import Header from "../components/navigation/Header"
 import { Route, Switch } from "react-router-dom";
 import { USER_ROUTES } from "../constants/ROUTERS";
-import Quinielas from "../pages/Quinielas";
-import QuienielaArmar from "../pages/QuinielaArmar";
-import Carrito from "../pages/Carrito";
+import Quinielas from "../pages/UserPages/Quinielas";
+import QuienielaArmar from "../pages/UserPages/QuinielaArmar";
+import Carrito from "../pages/UserPages/Carrito";
 import DepositarForm from "../components/forms/DepositarForm";
 import CreateWallet from "../components/forms/CreateWallet";
 import UserProfile from '../pages/UserPages/UserProfile';

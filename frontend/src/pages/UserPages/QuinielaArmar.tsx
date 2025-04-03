@@ -1,6 +1,6 @@
-import Card from "../components/cards/Card"
-import Boton from "../components/ui/Boton"
-import BotonQuiniela from "../components/ui/BotonQuiniela"
+import {Card} from "../../components/cards/Card"
+import Boton from "../../components/ui/Boton"
+import BotonQuiniela from "../../components/ui/BotonQuiniela"
 
 const quinielas = {
     id: 1,

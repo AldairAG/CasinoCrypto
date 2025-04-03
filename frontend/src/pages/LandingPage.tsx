@@ -7,7 +7,7 @@ import img4 from '../assets/maletin.png'
 import img5 from '../assets/manosCartas.png'
 import img6 from '../assets/ruleta.png'
 import img7 from '../assets/personasGanando.png'
-import Card from "../components/cards/Card"
+import {Card} from "../components/cards/Card"
 import { useState } from "react"
 import LoginForm from "../components/forms/LoginForm"
 import RegisterForm from "../components/forms/RegisterForm"
