@@ -31,7 +31,7 @@ const LandingPage = () => {
         });
     }, []);
 
-    const openModal = useCallback((modal: "login" | "register") => {
+    const openModal = useCallback((modal: 'login' | 'register') => {
         setState((prev) => ({
             ...prev,
             [modal]: !prev[modal], // Invierte el valor de `modal` en el estado
@@ -154,7 +154,7 @@ const LandingPage = () => {
             </div>
 
             <div>
-                <img src='' alt="anuncio" />
+                <img alt="anuncio" />
             </div>
 
             <footer>

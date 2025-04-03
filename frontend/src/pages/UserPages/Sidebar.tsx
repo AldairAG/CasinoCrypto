@@ -1,3 +1,4 @@
+import { Card, CardHeader } from "../../components/cards/Card";
 import { IconName } from "../../components/ui/Icons";
 import { icons } from "../../components/ui/Icons";
 import { useState } from "react";
@@ -53,10 +54,9 @@ const Sidebar: React.FC<SidebarProps> = ({
   ];
 
   return (
-    <div className="w-64 bg-gray-50 dark:bg-gray-800 p-4">
-      <div className="mb-6">
-        <h3 className="text-lg font-semibold text-gray-800 dark:text-white">Menú Principal</h3>
-      </div>
+    <Card className="w-64 bg-gray-50 dark:bg-gray-800 p-4">
+      <CardHeader className="text-lg mb-4">Menú Principal</CardHeader>
+
       <ul className="space-y-1 text-gray-700 dark:text-gray-300">
         {mainMenuItems.map((item) => (
           <li key={item.id}>
@@ -117,7 +117,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           </li>
         ))}
       </ul>
-    </div>
+    </Card>
   );
 };
 

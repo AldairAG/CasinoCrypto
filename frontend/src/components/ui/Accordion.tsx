@@ -11,15 +11,15 @@ const Accordion: React.FC<AccordionProps> = ({ title, children, defaultOpen = fa
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <div className="w-full border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden mb-4">
+    <div className="w-full border border-gray-300 rounded-lg overflow-hidden mb-4">
       <button
         type="button" // Añadido type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between w-full px-4 py-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition"
+        className="flex items-center justify-between w-full px-4 py-3 bg-gray-100 hover:bg-gray-200 transition"
         aria-expanded={isOpen}
         aria-controls={`accordion-content-${title}`}
       >
-        <span className="text-lg font-medium dark:text-white">{title}</span>
+        <span className="text-lg font-medium">{title}</span>
         <motion.svg
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.2 }}
@@ -40,7 +40,7 @@ const Accordion: React.FC<AccordionProps> = ({ title, children, defaultOpen = fa
         transition={{ duration: 0.3 }}
         className="overflow-hidden"
       >
-        <div className="p-4 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300">
+        <div className="p-4 bg-white text-gray-700">
           {children}
         </div>
       </motion.div>
