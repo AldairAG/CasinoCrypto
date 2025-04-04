@@ -19,4 +19,5 @@ export const ADMIN_ROUTES = {
     ADMIN_USER: '/admin/user',
     ADMIN_QUINIELAS: '/admin/qunielas',
     ADMIN_QUINIELA: '/admin/quniela',
+    ADMIN_CREATE_QUINIELA: '/admin/crear-quniela',
 }

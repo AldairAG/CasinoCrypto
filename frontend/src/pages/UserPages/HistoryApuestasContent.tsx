@@ -1,7 +1,33 @@
-// QuinelaContent.tsx
-import React, { useState } from 'react';
-import MovementItem from '../../components/ui/MovementItem';
-import FiltersQuinela from '../../components/ui/FiltersQuinela';
+import { Card } from "../../components/cards/Card";
+import FiltersQuinela from "../../components/ui/FiltersQuinela";
+import MovementItem from "../../components/ui/MovementItem";
+
+//Menu para las secciuones de historial en el tabs
+const HistoryApuestasContent: React.FC = () => {
+  return(
+    <Card>
+      vacio
+    </Card>
+  )
+};
+
+const CasinoContent: React.FC = () => {
+  return (
+    <div className="mt-4">
+      <h4 className="text-lg font-medium dark:text-white mb-4">Seccion de Casino en proceso..</h4>
+    
+    </div>
+  );
+};
+
+const ApuestasContent: React.FC = () => {
+  return (
+    <div className="mt-4">
+      <h4 className="text-lg font-medium dark:text-white mb-4">Seccion de Apuestas en proceso...</h4>
+     
+    </div>
+  );
+};
 
 const QuinelaContent:React.FC = () => {
   const allMovements = [
@@ -58,4 +84,6 @@ const QuinelaContent:React.FC = () => {
   );
 };
 
-export default QuinelaContent;
+
+
+export default HistoryApuestasContent;

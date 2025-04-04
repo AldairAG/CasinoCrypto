@@ -1,6 +1,8 @@
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { Badge, Card } from "../../components/cards/Card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem } from "../../components/ui/DropdownMenu";
+import { Link } from "react-router-dom";
+import { ADMIN_ROUTES } from "../../constants/ROUTERS";
 
 const quinielas = [
     {
@@ -59,10 +61,11 @@ const Quinielas = () => {
                     <p className="text-muted-foreground">Aquí puedes gestionar las quinielas.</p>
                 </div>
 
-                <button className="flex bg-blue-500 text-white rounded-md px-4 py-2 items-center gap-2 hover:bg-blue-500 transition duration-200 ease-in-out">
+                <Link to={ADMIN_ROUTES.ADMIN_CREATE_QUINIELA}
+                    className="flex bg-blue-500 text-white rounded-md px-4 py-2 items-center gap-2 hover:bg-blue-500 transition duration-200 ease-in-out">
                     <PlusIcon className="h-6 w-6 text-gray-50" />
                     <span>Nueva Quiniela</span>
-                </button>
+                </Link>
             </div>
 
             <Card className="flex text-center p-1">

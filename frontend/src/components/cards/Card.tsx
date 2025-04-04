@@ -29,6 +29,22 @@ const CardHeader:React.FC<CardProps> = ({ children, className }) => {
     )
 }
 
+const CardHead:React.FC<CardProps> = ({ children, className }) => {
+    return (
+        <div className={twMerge("space-y-1 mb-8", className)}>
+            {children}
+        </div>
+    )
+}
+
+const CardContent:React.FC<CardProps> = ({ children, className }) => {
+    return (
+        <div className={twMerge("flex", className)}>
+            {children}
+        </div>
+    )
+}
+
 const Badge:React.FC<CardProps> = ({ children, className }) => {
     return (
         <span className={twMerge("border border-gray-300 text-xs font-semibold px-2 py-1 rounded-full", className)}>
@@ -39,4 +55,4 @@ const Badge:React.FC<CardProps> = ({ children, className }) => {
 
 
 
-export { Card, CardHeader, CardDescription,Badge };
+export { Card, CardHeader, CardDescription,Badge,CardHead,CardContent };

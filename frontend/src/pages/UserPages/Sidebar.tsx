@@ -1,6 +1,6 @@
 import { Card, CardHeader } from "../../components/cards/Card";
-import { IconName } from "../../components/ui/Icons";
-import { icons } from "../../components/ui/Icons";
+import { IconName } from "../../components/icons/Icons";
+import { icons } from "../../components/icons/Icons";
 import { useState } from "react";
 
 interface SidebarProps {

@@ -7,9 +7,7 @@ import BotonLogout from "../components/ui/BotonLogout";
 import Dashboard from "../pages/AdminPages/Dashboard";
 import Quinielas from "../pages/AdminPages/Quinielas";
 import Usuarios from "../pages/AdminPages/Usuarios";
-
-
-
+import CreateQuiniela from "../pages/AdminPages/CreateQuiniela";
 
 const routes = [
     {
@@ -58,7 +56,6 @@ const AdminLayout = () => {
 
             </header>
 
-
             <section className="flex justify-center">
                 <Switch>
                     <Route path={ADMIN_ROUTES.ADMIN_HOME} component={Dashboard} />
@@ -66,6 +63,7 @@ const AdminLayout = () => {
                     <Route path={ADMIN_ROUTES.ADMIN_QUINIELAS} component={Quinielas} />
                     <Route path={ADMIN_ROUTES.ADMIN_USER} component={Dashboard} />
                     <Route path={ADMIN_ROUTES.ADMIN_USERS} component={Usuarios} />
+                    <Route path={ADMIN_ROUTES.ADMIN_CREATE_QUINIELA} component={CreateQuiniela} />
                 </Switch>
             </section>
 

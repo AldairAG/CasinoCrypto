@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { Card, CardHeader } from "../cards/Card";
 
 interface SidebarProps {
     defaultValue: string;
@@ -41,25 +42,22 @@ const Sidebar: React.FC<SidebarProps> = ({ defaultValue, children, className }) 
 };
 
 const SidebarList: React.FC<SidebarListProps> = ({ children,className, activeItem, setActiveItem }) => (
-    <nav className={twMerge("w-64 p-4 bg-gray-100 border-r", className)}>
+    <Card className={twMerge("w-64 p-4", className)}>
+        <CardHeader className="text-lg mb-4">Menu</CardHeader>
         {React.Children.map(children, (child) =>
             React.isValidElement<SidebarItemProps & { activeItem?: string; setActiveItem?: (value: string) => void }>(child)
                 ? React.cloneElement(child, { activeItem, setActiveItem })
                 : child
         )}
-    </nav>
+    </Card>
 );
 
 const SidebarItem: React.FC<SidebarItemProps & { activeItem?: string; setActiveItem?: (value: string) => void }> = ({
-    value,
-    children,
-    className,
-    activeItem,
-    setActiveItem,
+    value,children,className,activeItem,setActiveItem,
 }) => (
     <button
         className={twMerge(
-            "block w-full text-left px-4 py-2 rounded-md transition",
+            "w-full text-left px-4 py-2 rounded-md transition",
             activeItem === value ? "bg-blue-500 text-white" : "hover:bg-gray-200",
             className
         )}
@@ -70,6 +68,6 @@ const SidebarItem: React.FC<SidebarItemProps & { activeItem?: string; setActiveI
 );
 
 const SidebarContent: React.FC<SidebarContentProps & { activeItem?: string }> = ({ value, children, className, activeItem }) =>
-    activeItem === value ? <div className={twMerge("p-4 flex-1", className)}>{children}</div> : null;
+    activeItem === value ? <div className={twMerge("", className)}>{children}</div> : null;
 
 export { Sidebar, SidebarList, SidebarItem, SidebarContent };

@@ -3,10 +3,8 @@ import { twMerge } from "tailwind-merge";
 
 const MainDiv: React.FC<{ children?: React.ReactNode, className?: string }> = ({ children, className }) => {
   return (
-    <div className={twMerge("flex", className)}>
-      <div className="flex-1 p-6 overflow-auto">
-        {children}
-      </div>
+    <div className={twMerge("w-full max-w-[1600px] p-6 h-full", className)}>
+      {children}
     </div>
   );
 }

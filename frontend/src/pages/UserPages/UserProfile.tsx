@@ -1,116 +1,70 @@
-import { useState } from "react";
-import Tabs from "./Tabs";
 import ProfileContent from "./ProfileContent";
-import DashboardContent from "./IdentificationContent";
-import PasswordContent from "./PasswordContent";
-import VerificationContent from "./VerificationContent";
-import HistoryTabs from "./HistoryTabs";
-import CasinoContent from "./CasinoContent";
-import ApuestasContent from "./ApuestasContent";
-import QuinelaContent from "../UserPages/QuinelaContent";
+import HistoryApuestasContent from "./HistoryApuestasContent";
 import FAQContent from "./FAQContent";
 import SupportContent from "./SupportContent";
 import TransactionsContent from "./TransactionsContent";
-import TransactionsTabs from "./TransactionsTabs";
 import MainDiv from "../../components/ui/MainDiv";
 import { Sidebar, SidebarContent, SidebarItem, SidebarList } from "../../components/navigation/SiderBar";
-import Accordion from "../../components/ui/Accordion";
+import { WalletIcon } from "@heroicons/react/24/outline";
+import { UserIcon } from "@heroicons/react/24/outline";
+
 
 const UserProfile: React.FC = () => {
-  const [activeMainTab, setActiveMainTab] = useState<string>("profile");
-  const [activeHistoryTab, setActiveHistoryTab] = useState<string>("operations");
-
-  const sectionsWithoutMainTabs = ["history", "history_bets", "history_transactions", "faq", "support"];
 
   return (
-    <MainDiv> 
-      <Sidebar defaultValue="perfil" className="w-64 bg-gray-100 border-r">
-        <SidebarList>
-          <SidebarItem value="perfil">Perfil</SidebarItem>
-          <SidebarItem value="wallets">Manejo de wallets</SidebarItem>
-          <SidebarItem value="transacciones">Transacciones</SidebarItem>
-          <SidebarItem value="apuestas">Apuestas</SidebarItem>
-          <SidebarItem value="faq">Preguntas frecuentes</SidebarItem>
-          <SidebarItem value="soporte">Soporte</SidebarItem>
+    <MainDiv className="h-[calc(100vh-150px)] p-4">
+
+      <Sidebar defaultValue="perfil" className="bg-gray-100 space-x-6 w-full">
+
+        <SidebarList className="w-1/4 sm:w-1/5 max-h-1/2">
+          <SidebarItem className="flex gap-2 items-center" value="perfil">
+            <UserIcon className="h-5 w-5" />
+            Perfil
+          </SidebarItem>
+          <SidebarItem className="flex gap-2 items-center" value="wallets">
+            <WalletIcon className="h-5 w-5" />
+            Manejo de wallets
+          </SidebarItem>
+          <SidebarItem className="flex gap-2 items-center" value="apuestas">
+            Apuestas
+          </SidebarItem>
+          <SidebarItem className="flex gap-2 items-center" value="transacciones">
+            Transacciones
+          </SidebarItem>
+          <SidebarItem className="flex gap-2 items-center" value="faq">
+            Preguntas frecuentes
+          </SidebarItem>
+          <SidebarItem className="flex gap-2 items-center" value="soporte">
+            Soporte
+          </SidebarItem>
         </SidebarList>
+
+        <SidebarContent value="perfil" className="w-full h-full">
+          <ProfileContent />
+        </SidebarContent>
+
+        <SidebarContent value="wallets">
+          <h1 className="text-2xl font-bold">Area para wallets</h1>
+        </SidebarContent>
+
+        <SidebarContent value="transacciones" className="w-full">
+          <TransactionsContent />
+        </SidebarContent>
+
+        <SidebarContent value="apuestas" className="w-full">
+          <HistoryApuestasContent />
+        </SidebarContent>
+
+        <SidebarContent value="faq" className="w-full">
+          <FAQContent />
+        </SidebarContent>
+
+        <SidebarContent value="soporte" className="w-full">
+          <SupportContent />
+        </SidebarContent>
+
       </Sidebar>
 
-      <div className="flex-1 p-6">
-        <SidebarContent value="dashboard">
-          <h1 className="text-2xl font-bold">📊 Dashboard</h1>
-          <p>Bienvenido al panel principal.</p>
-        </SidebarContent>
-
-        <SidebarContent value="profile">
-          <h1 className="text-2xl font-bold">👤 Perfil</h1>
-          <p>Aquí puedes actualizar tu información personal.</p>
-        </SidebarContent>
-
-        <SidebarContent value="settings">
-          <h1 className="text-2xl font-bold">⚙️ Configuración</h1>
-          <p>Ajustes y preferencias de tu cuenta.</p>
-        </SidebarContent>
-      </div>
-
-      {/* 
-
-      <div className="flex-1 flex flex-col">
-        <div className="flex-1 flex flex-col bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
-          {!sectionsWithoutMainTabs.includes(activeMainTab) && (
-            <div className="px-6 pt-6">
-              <Tabs activeTab={activeMainTab} setActiveTab={setActiveMainTab} />
-            </div>
-          )}
-
-          <div className="flex-1 p-6 overflow-auto">
-            {activeMainTab === "profile" && <ProfileContent />}
-
-            {activeMainTab === "history" && (
-              <div className="mt-4">
-                <p className="text-gray-600 dark:text-gray-300">
-                  Selecciona una opción del menú Historial
-                </p>
-              </div>
-            )}
-
-            {activeMainTab === "history_bets" && (
-              <>
-                <HistoryTabs
-                  activeSubTab={activeHistoryTab}
-                  setActiveSubTab={setActiveHistoryTab}
-                />
-                <div className="mt-4">
-                  {activeHistoryTab === "casino" && <CasinoContent />}
-                  {activeHistoryTab === "apuesta" && <ApuestasContent />}
-                  {activeHistoryTab === "quinela" && <QuinelaContent />}
-                </div>
-              </>
-            )}
-
-            {activeMainTab === "history_transactions" && (
-              <>
-                <TransactionsTabs
-                  activeSubTab={activeHistoryTab}
-                  setActiveSubTab={setActiveHistoryTab}
-                />
-                <TransactionsContent subTab={activeHistoryTab} />
-              </>
-            )}
-
-            {activeMainTab === "dashboard" && <DashboardContent />}
-            {activeMainTab === "verification" && <VerificationContent />}
-            {activeMainTab === "password" && <PasswordContent />}
-
-            {activeMainTab === "faq" && (
-              <FAQContent
-                onNavigateToSupport={() => setActiveMainTab("support")}
-              />
-            )}
-
-            {activeMainTab === "support" && <SupportContent />}
-          </div>
-        </div>
-      </div> */}
     </MainDiv>
   );
 };
