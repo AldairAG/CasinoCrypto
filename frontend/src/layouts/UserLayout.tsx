@@ -8,6 +8,9 @@ import DepositarForm from "../components/forms/DepositarForm";
 import CreateWallet from "../components/forms/CreateWallet";
 import UserProfile from '../pages/UserPages/UserProfile';
 
+//import para prueba de la seccion de wallets
+import WalletManager from "../components/forms/WalletManager";
+
 const UserLayout = () => {
     return (
         <main>
@@ -18,7 +21,7 @@ const UserLayout = () => {
                     <Route path={USER_ROUTES.USER_PROFILE} component={UserProfile} />
                     <Route path={USER_ROUTES.QUINIELAS_LIST} component={Quinielas} />
                     <Route path={USER_ROUTES.QUINIELA} component={QuienielaArmar} />
-                    <Route path={USER_ROUTES.CARRITO} component={CreateWallet} />
+                    <Route path={USER_ROUTES.CARRITO} component={WalletManager} />
                 </Switch>
             </div>
         </main>

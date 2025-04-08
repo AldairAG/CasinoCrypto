@@ -7,7 +7,10 @@ import MainDiv from "../../components/ui/MainDiv";
 import { Sidebar, SidebarContent, SidebarItem, SidebarList } from "../../components/navigation/SiderBar";
 import { WalletIcon } from "@heroicons/react/24/outline";
 import { UserIcon } from "@heroicons/react/24/outline";
-
+import { ArrowPathRoundedSquareIcon } from "@heroicons/react/24/outline";
+import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
+import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/react/24/outline";
+import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
 
 const UserProfile: React.FC = () => {
 
@@ -26,15 +29,19 @@ const UserProfile: React.FC = () => {
             Manejo de wallets
           </SidebarItem>
           <SidebarItem className="flex gap-2 items-center" value="apuestas">
+          <CurrencyDollarIcon className="h-5 w-5" />
             Apuestas
           </SidebarItem>
           <SidebarItem className="flex gap-2 items-center" value="transacciones">
+          <ArrowPathRoundedSquareIcon className="h-5 w-5" />
             Transacciones
           </SidebarItem>
           <SidebarItem className="flex gap-2 items-center" value="faq">
+          <QuestionMarkCircleIcon className="h-5 w-5" />
             Preguntas frecuentes
           </SidebarItem>
           <SidebarItem className="flex gap-2 items-center" value="soporte">
+          <ChatBubbleOvalLeftEllipsisIcon  className="h-5 w-5" />
             Soporte
           </SidebarItem>
         </SidebarList>

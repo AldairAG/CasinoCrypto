@@ -2,7 +2,7 @@ import React from "react";
 import { twMerge } from "tailwind-merge";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  id: string;
+  id?: string;
   label?: string;
   classNameInput?: string;
   classNameDiv?: string;
