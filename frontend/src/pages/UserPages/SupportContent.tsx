@@ -22,7 +22,7 @@
 //   const handleSubmit = async (e: React.FormEvent) => {
 //     e.preventDefault();
 //     setIsSubmitting(true);
-    
+
 //     try {
 //       // Simular envío a API
 //       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -65,7 +65,7 @@
 //         <Support className="text-blue-600 dark:text-blue-400 w-6 h-6" />
 //         <h1 className="text-3xl font-bold dark:text-white">Soporte</h1>
 //       </div>
-      
+
 //       <p className="text-gray-600 dark:text-gray-300 mb-6">
 //         Seleccione el problema que más se acerque al que presenta
 //       </p>
@@ -126,7 +126,7 @@ const SupportContent: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     try {
       await new Promise(resolve => setTimeout(resolve, 1000));
       setSubmitSuccess(true);
@@ -162,15 +162,15 @@ const SupportContent: React.FC = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-2xl mx-auto">
-      <Card className="p-6 mb-6">
+    <form onSubmit={handleSubmit} className="w-full max-w-[1600px] h-full">
+      <Card className="h-full">
         <div className="flex items-center gap-2 mb-4">
           <Support className="text-blue-600 w-6 h-6" />
           <CardHeader className="text-3xl font-bold">
             Soporte
           </CardHeader>
         </div>
-        
+
         <CardDescription className="mb-6">
           Seleccione el problema que más se acerque al que presenta
         </CardDescription>
@@ -192,17 +192,19 @@ const SupportContent: React.FC = () => {
           required
           className="bg-gray-50 border-gray-300 focus:ring-blue-500"
         />
+
+        <div className="flex justify-end">
+          <Boton
+            type="submit"
+            disabled={!selectedProblem || !problemDescription || isSubmitting}
+            className="px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400"
+          >
+            {isSubmitting ? "Enviando..." : "Enviar Solicitud"}
+          </Boton>
+        </div>
       </Card>
 
-      <div className="flex justify-end">
-        <Boton
-          type="submit"
-          disabled={!selectedProblem || !problemDescription || isSubmitting}
-          className="px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400"
-        >
-          {isSubmitting ? "Enviando..." : "Enviar Solicitud"}
-        </Boton>
-      </div>
+
     </form>
   );
 };

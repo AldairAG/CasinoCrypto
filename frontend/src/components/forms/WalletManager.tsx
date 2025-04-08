@@ -5,6 +5,7 @@ import { CreateWallet } from "./CreateWallet";
 import { DepositSection } from "./DepositSection";
 import { WithdrawSection } from "./WithdrawSection";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../navigation/Tabs";
+import MainDiv from "../ui/MainDiv";
 
 // Definición del tipo Wallet
 type Wallet = {
@@ -18,7 +19,6 @@ type Wallet = {
 
 
 export const WalletManager: React.FC = () => {
-  const [activeTab, setActiveTab] = useState("wallets");
 
   // Datos estáticos de ejemplo
   const wallets: Wallet[] = [
@@ -39,11 +39,9 @@ export const WalletManager: React.FC = () => {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      <Tabs 
+    <Card className="w-full h-full">
+      <Tabs
         defaultValue="wallets"
-        value={activeTab}
-        onValueChange={setActiveTab}
       >
         <TabsList>
           <TabsTrigger value="deposit">Deposit</TabsTrigger>
@@ -84,7 +82,7 @@ export const WalletManager: React.FC = () => {
           </Card>
         </TabsContent>
       </Tabs>
-    </div>
+    </Card>
   );
 };
 

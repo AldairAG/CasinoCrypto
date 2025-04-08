@@ -1,8 +1,8 @@
 import Input from "../../components/ui/Input";
 import Boton from "../../components/ui/Boton";
-import {Card, CardHeader, CardDescription,CardHead,CardContent } from "../../components/cards/Card";
+import { Card, CardHeader, CardDescription, CardHead, CardContent } from "../../components/cards/Card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../../components/navigation/Tabs";
-import { UserIcon,CheckBadgeIcon ,LockClosedIcon,IdentificationIcon} from "@heroicons/react/24/outline";
+import { UserIcon, CheckBadgeIcon, LockClosedIcon, IdentificationIcon } from "@heroicons/react/24/outline";
 
 
 
@@ -71,33 +71,28 @@ const VerificationContent: React.FC = () => (
     </CardHead>
 
     <CardContent className="flex flex-col md:flex-row gap-4 mb-6">
-      <div className="flex-1">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Correo electrónico
-        </label>
-        <Input
-          id="email"
-          type="email"
-          placeholder="tucorreo@ejemplo.com"
-          className="!w-[280px] bg-gray-50 text-gray-900 border-gray-300 focus:ring-blue-500"
-        />
-      </div>
 
-      <div className="flex-1">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Código de verificación
-        </label>
-        <Input
-          id="code"
-          type="number"
-          placeholder="123456"
-          className="!w-[280px] bg-gray-50 text-gray-900 border-gray-300 focus:ring-blue-500"
-        />
-      </div>
+      <Input
+        classNameDiv="flex-1"
+        label="Correo electrónico"
+        id="email"
+        type="email"
+        placeholder="tucorreo@ejemplo.com"
+        className="!w-[280px] bg-gray-50 text-gray-900 border-gray-300 focus:ring-blue-500"
+      />
+
+      <Input
+        classNameDiv="flex-1"
+        label="Código de verificación"
+        id="code"
+        type="number"
+        placeholder="123456"
+        className="!w-[280px] bg-gray-50 text-gray-900 border-gray-300 focus:ring-blue-500"
+      />
     </CardContent>
 
     <div className="flex justify-center">
-      <Boton 
+      <Boton
         className="px-8 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md shadow-sm transition-colors"
       >
         Verificar Identidad
@@ -105,7 +100,6 @@ const VerificationContent: React.FC = () => (
     </div>
   </Card>
 );
-
 
 const PerfilData = () => {
   return (
@@ -172,8 +166,6 @@ const PerfilData = () => {
     </div>
   )
 }
-
-
 
 const PasswordContent: React.FC = () => (
   <Card className="p-8 bg-white shadow-lg max-w-2xl mx-auto">
@@ -245,7 +237,6 @@ const PasswordContent: React.FC = () => (
   </Card>
 );
 
-
 // const IdentificationContent: React.FC = () => (
 //   <div className="w-full p-6 bg-white rounded-lg shadow-md dark:bg-gray-800">
 //     <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-6">
@@ -315,7 +306,7 @@ const IdentificationContent: React.FC = () => (
     <CardHeader className="text-xl font-bold text-gray-900 mb-4">
       Seleccione y suba los documentos correspondientes
     </CardHeader>
-    
+
     <CardDescription className="text-gray-600 mb-6 text-lg">
       Se requiere un comprobante de domicilio y un tipo de DNI
     </CardDescription>

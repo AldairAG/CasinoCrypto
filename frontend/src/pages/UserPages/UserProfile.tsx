@@ -11,6 +11,7 @@ import { ArrowPathRoundedSquareIcon } from "@heroicons/react/24/outline";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/react/24/outline";
 import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
+import WalletManager from "../../components/forms/WalletManager";
 
 const UserProfile: React.FC = () => {
 
@@ -51,7 +52,7 @@ const UserProfile: React.FC = () => {
         </SidebarContent>
 
         <SidebarContent value="wallets">
-          <h1 className="text-2xl font-bold">Area para wallets</h1>
+          <WalletManager/>
         </SidebarContent>
 
         <SidebarContent value="transacciones" className="w-full">

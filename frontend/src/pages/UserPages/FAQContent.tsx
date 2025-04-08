@@ -75,7 +75,7 @@ const FAQContent: React.FC<FAQContentProps> = ({ onNavigateToSupport }) => {
   ];
 
   return (
-    <div className="p-4 max-w-4xl mx-auto">
+    <Card>
       {/* Encabezado con CardHeader */}
       <CardHeader className="text-2xl font-bold text-gray-900 mb-6">
         Preguntas Frecuentes
@@ -112,7 +112,7 @@ const FAQContent: React.FC<FAQContentProps> = ({ onNavigateToSupport }) => {
           </Boton>
         </div>
       </Card>
-    </div>
+    </Card>
   );
 };
 
