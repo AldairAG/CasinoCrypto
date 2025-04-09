@@ -15,14 +15,14 @@ const DepositarForm = () => {
             <div className="p-4 bg-gray-200 rounded-md">
                 <div className="grid grid-cols-2 gap-4">
                     <div>
-                        <p className="text-sm font-medium">Current Rate</p>
+                        <p className="text-sm font-medium">Tasa actual</p>
                         <p className="text-lg">
                             1 {'SOL'} = $
                             {'150'}
                         </p>
                     </div>
                     <div>
-                        <p className="text-sm font-medium">You will receive</p>
+                        <p className="text-sm font-medium">Usted recibirá</p>
                         <p className="text-lg">
                             {0.00} {'SOL'}
                         </p>
