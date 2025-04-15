@@ -9,7 +9,7 @@ import CreateWallet from "../components/forms/CreateWallet";
 import UserProfile from '../pages/UserPages/UserProfile';
 
 //import para prueba de la seccion de wallets
-import WalletManager from "../components/forms/WalletManager";
+import WalletManager from "../pages/UserPages/WalletManager";
 
 const UserLayout = () => {
     return (

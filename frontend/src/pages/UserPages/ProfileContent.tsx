@@ -182,10 +182,9 @@ const PasswordContent: React.FC = () => (
     <div className="space-y-8">
       {/* Paso 1: Email */}
       <div className="space-y-3">
-        <label className="block text-lg font-medium text-gray-800">
-          1. Ingrese su correo para recibir un código
-        </label>
+        
         <Input
+        label="1. Ingrese su correo para recibir un código"
           id="email"
           type="email"
           placeholder="ejemplo@gmail.com"
@@ -198,14 +197,13 @@ const PasswordContent: React.FC = () => (
 
       {/* Paso 2: Código */}
       <div className="space-y-3">
-        <label className="block text-lg font-medium text-gray-800">
-          2. Ingrese el código de verificación
-        </label>
+       
         <Input
+          label=" 2. Ingrese el código de verificación" 
           id="code"
           type="text"
           placeholder="123456"
-          className="w-full px-4 py-3 bg-gray-50 text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full px-4 py-3 bg-gray-50 text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg font-medium"
         />
         <Boton className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition-colors">
           Validar código

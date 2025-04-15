@@ -11,7 +11,7 @@ import { ArrowPathRoundedSquareIcon } from "@heroicons/react/24/outline";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/react/24/outline";
 import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
-import WalletManager from "../../components/forms/WalletManager";
+import WalletManager from "./WalletManager";
 
 const UserProfile: React.FC = () => {
 
