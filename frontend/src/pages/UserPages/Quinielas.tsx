@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import Boton from "../../components/ui/Boton";
 import { USER_ROUTES } from "../../constants/ROUTERS";
 import { useUser } from "../../hooks/useUser";
+import { deportesService } from "../../services/deportes/partidoService.ts";
 
 const quineilas = [
     { hora: '1d 1h', titulo: 'Copa del Rey - Semifinales', partidos: 15, premio: 100000, participantes: 18920 },
@@ -12,6 +14,16 @@ const quineilas = [
 
 const Quinielas = () => {
         const { navigateTo } = useUser()
+
+        useEffect(() => {
+            fetchpruebas()
+        }, [])
+
+        const fetchpruebas=async()=>{
+            const result= await deportesService.getNext7DaysMatches()
+            console.log(result);
+            
+        }
 
     return (
         <main className="px-4">

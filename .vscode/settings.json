@@ -1,4 +1,16 @@
 {
     "java.compile.nullAnalysis.mode": "automatic",
-    "inlineChat.lineNaturalLanguageHint": true
+    "inlineChat.lineNaturalLanguageHint": true,
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "casino",
+            "database": "db_casino",
+            "username": "postgres"
+        }
+    ]
 }

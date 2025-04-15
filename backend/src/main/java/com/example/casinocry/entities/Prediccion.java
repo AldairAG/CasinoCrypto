@@ -1,36 +1,36 @@
 package com.example.casinocry.entities;
 
-import java.util.Date;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Setter
 @Getter
-public class Apuesta {
+@Setter
+public class Prediccion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idApuesta;
+    private Long idPrediccion;
+    private Integer golesLocal;
+    private Integer golesVisitante;
+    private String prediccion; // local/empate/visitante
 
     @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = false)
-    private Usuario usuario;
+    @JoinColumns({
+            @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario"),
+            @JoinColumn(name = "id_quiniela", referencedColumnName = "id_quiniela")
+    })
+    private UsuarioQuiniela usuarioQuiniela;
 
     @ManyToOne
     @JoinColumn(name = "id_partido", nullable = false)
     private Partido partido;
-
-    private Double montoApostado;
-    private String tipoApuesta; // azar/deporte/quiniela
-    private String resultado; // ganada/perdida/pendiente
-    private Date fechaApuesta;
 
     // Getters y Setters
 }

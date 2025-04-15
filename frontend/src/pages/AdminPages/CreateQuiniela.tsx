@@ -1,9 +1,27 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CardHeader, CardDescription, Card, CardHead, CardContent } from "../../components/cards/Card";
 import Input from "../../components/ui/Input";
 import MainDiv from "../../components/ui/MainDiv";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../../components/navigation/Tabs";
 import { ArrowUpOnSquareIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
+import Select from "../../components/ui/Select";
+import { useDeportes } from "../../hooks/useDeportes";
+import Loader from "../../components/ui/Loader";
+import EventItem from "../../components/items/EventItem";
+
+
+const leagues = [
+    { id: 4328, name: 'Premier League' },
+    { id: 4335, name: 'LaLiga' },
+    { id: 4332, name: 'Serie A' },
+    { id: 4331, name: 'Bundesliga' },
+    { id: 4334, name: 'Ligue 1' },
+    { id: 4480, name: 'Brasileirão' },
+    { id: 4346, name: 'MLS' },
+    { id: 4351, name: 'Liga MX' },
+    { id: 4337, name: 'Eredivisie' },
+    { id: 4344, name: 'Primeira Liga' },
+];
 
 const CreateQuiniela = () => {
     return (
@@ -46,16 +64,14 @@ const CreateQuiniela = () => {
                     <GeneralTab />
                 </TabsContent>
                 <TabsContent value="partidos">
-                    {/* Contenido para la pestaña "Partidos" */}
-                    Partidos
+                    <SeleccionarPartidosTab />
                 </TabsContent>
                 <TabsContent value="premios">
                     {/* Contenido para la pestaña "Premios" */}
                     Premios
                 </TabsContent>
                 <TabsContent value="tipos">
-                    {/* Contenido para la pestaña "Premios" */}
-                    Premios
+                    <div></div>
                 </TabsContent>
             </Tabs>
 
@@ -63,7 +79,6 @@ const CreateQuiniela = () => {
         </MainDiv>
     )
 }
-
 
 const GeneralTab = () => {
     const inputRef = useRef<HTMLInputElement>(null);
@@ -168,5 +183,83 @@ const GeneralTab = () => {
         </Card>
     )
 }
+
+const SeleccionarPartidosTab = () => {
+    const { findEventosLigasFamosas, eventos } = useDeportes();
+    const [selectedLeagueId, setSelectedLeagueId] = useState('4328');
+    const [Loading, setLoading] = useState(true);
+    const [selectedEventIds, setSelectedEventIds] = useState<string[]>([]); // Estado para almacenar los IDs seleccionados
+
+    useEffect(() => {
+        fetchLiga(selectedLeagueId);
+    }, [selectedLeagueId]);
+
+    const fetchLiga = async (selectedLeagueId: string) => {
+        setLoading(true);
+        await findEventosLigasFamosas(selectedLeagueId);
+        setLoading(false);
+    };
+
+    const handleLeagueChange = (value: string) => {
+        console.log();
+
+        setSelectedLeagueId(value);
+    };
+
+    const handleCheckboxChange = (id: string) => {
+        setSelectedEventIds((prev) =>
+            prev.includes(id)
+                ? prev.filter((eventId) => eventId !== id) // Si ya está seleccionado, lo elimina
+                : [...prev, id] // Si no está seleccionado, lo agrega
+        );
+    };
+
+    return (
+        <Card>
+            <CardHead>
+                <CardHeader>Seleccionar partidos</CardHeader>
+                <CardDescription>Selecciona los partidos para la quiniela.</CardDescription>
+            </CardHead>
+
+            <CardContent className="grid grid-cols-2 gap-5">
+                <div className="flex gap-2 col-span-2 items-center border-b border-b-gray-300 justify-between pb-4">
+                    <h1>Filtrar partidos por liga</h1>
+                    <Select
+                        classNameDiv="w-1/2"
+                        value={selectedLeagueId}
+                        onChange={(e) => handleLeagueChange(e.target.value)}
+                    >
+                        {leagues.map((league) => (
+                            <option key={league.id} value={league.id}>
+                                {league.name}
+                            </option>
+                        ))}
+                    </Select>
+                </div>
+
+                <div className="w-full flex flex-col gap-2 col-span-2">
+                    <label className="text-sm text-gray-500 font-semibold">Partidos seleccionados</label>
+
+                    <div >
+                        {Loading ? (
+                            <Loader />
+                        ) : eventos.length === 0 ? (
+                            <p>No hay partidos disponibles</p>
+                        ) : (
+                            eventos.map((item) => (
+                                <EventItem
+                                    event={item}
+                                    key={item.idEvent}
+                                    checked={selectedEventIds.includes(item.idEvent)} // Verifica si está seleccionado
+                                    onChange={() => handleCheckboxChange(item.idEvent)} // Maneja el cambio
+                                />
+                            ))
+                        )}
+                    </div>
+                </div>
+            </CardContent>
+        </Card >
+    );
+};
 
 export default CreateQuiniela;
