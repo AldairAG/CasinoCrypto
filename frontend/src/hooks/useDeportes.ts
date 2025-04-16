@@ -16,6 +16,24 @@ const popularLeagueIds = [
     4344, // Primeira Liga
 ];
 
+/**
+ * Hook personalizado `useDeportes` para manejar la lógica relacionada con deportes, ligas y eventos.
+ *
+ * @returns {Object} Un objeto con las siguientes propiedades y funciones:
+ * - `eventos`: Lista de eventos obtenidos del estado global.
+ * - `findEventosLigasFamosas`: Función asíncrona para buscar eventos de ligas famosas por su ID.
+ *
+ * @function findEventosLigasFamosas
+ * @param {string} idLiga - El identificador de la liga para buscar sus eventos.
+ * @throws {Error} Si ocurre un error al intentar obtener los eventos de la liga.
+ *
+ * @example
+ * const { eventos, findEventosLigasFamosas } = useDeportes();
+ * 
+ * // Buscar eventos de una liga famosa
+ * await findEventosLigasFamosas('12345');
+ * console.log(eventos);
+ */
 export const useDeportes = () => {
     const dispatch = useDispatch();
     const ligas = useSelector(deportesSelector.ligas);

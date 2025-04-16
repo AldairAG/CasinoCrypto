@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Boton from "../../components/ui/Boton";
 import { USER_ROUTES } from "../../constants/ROUTERS";
-import { useUser } from "../../hooks/useUser";
+import { useUser } from "../../hooks/useUser.ts";
 import { deportesService } from "../../services/deportes/partidoService.ts";
 
 const quineilas = [

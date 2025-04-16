@@ -5,17 +5,19 @@ import storage from 'redux-persist/lib/storage'; // Usar localStorage como almac
 import { combineReducers } from 'redux';
 
 import deportesReducer from './slices/deportesSlice'; // Importa el slice de deportes
+import authReducer from './slices/authSlice'; // Importa el slice de auth con datos de ususario
 
 // Configuración de Redux-Persist
 const persistConfig = {
   key: 'root', // Clave bajo la cual se guardará el estado
-  storage, // Almacenamiento (localStorage por defecto)
-  whitelist: ['deportes'], // Solo persistir el slice 'auth' (opcional)
+  storage: sessionStorage, // Usar sessionStorage como almacenamiento
+  whitelist: ['deportes', 'auth'], // Solo persistir los slices 'deportes' y 'auth' (opcional)
 };
 
 // Combina todos los reducers
 const rootReducer = combineReducers({
   deportes: deportesReducer,
+  auth: authReducer,
 });
 
 // Aplica persistencia al reducer combinado
