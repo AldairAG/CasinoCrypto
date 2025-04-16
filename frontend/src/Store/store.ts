@@ -1,7 +1,7 @@
 // src/store.js
 import { configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // Usar localStorage como almacenamiento
+import storage from 'redux-persist/lib/storage/session'; // Usar sessionStorage como almacenamiento compatible
 import { combineReducers } from 'redux';
 
 import deportesReducer from './slices/deportesSlice'; // Importa el slice de deportes
@@ -10,7 +10,7 @@ import authReducer from './slices/authSlice'; // Importa el slice de auth con da
 // Configuración de Redux-Persist
 const persistConfig = {
   key: 'root', // Clave bajo la cual se guardará el estado
-  storage: sessionStorage, // Usar sessionStorage como almacenamiento
+  storage, // Usar sessionStorage como almacenamiento compatible
   whitelist: ['deportes', 'auth'], // Solo persistir los slices 'deportes' y 'auth' (opcional)
 };
 
