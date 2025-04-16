@@ -1,14 +1,18 @@
 package com.example.casinocry.service.user;
 
+import com.example.casinocry.dto.request.RegisterRequest;
+import com.example.casinocry.dto.response.LoginResponse;
+
 public interface UserService {
 
-    void registerUser(String username, String password, String email);
+    LoginResponse registerUser(RegisterRequest registerRequest);
     
-    boolean loginUser(String username, String password);
+    LoginResponse loginUser(String email, String password);
     
-    void updateUserProfile(String username, String newEmail);
-    
-    void deleteUserAccount(String username);
+    Boolean deleteUserAccount(Long idUser);
 
-    
+    void cambiarEmail(Long idUser, String nuevoEmail,String codigoVerificacion);
+
+    void cambiarContrasena(Long idUser, String nuevaContrasena, String codigoVerificacion);
+
 }

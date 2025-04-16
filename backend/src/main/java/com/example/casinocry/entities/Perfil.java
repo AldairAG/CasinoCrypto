@@ -2,6 +2,8 @@ package com.example.casinocry.entities;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,14 +23,16 @@ public class Perfil {
 
     @OneToOne
     @JoinColumn(name = "id_usuario", unique = true, nullable = false)
+    @JsonBackReference
     private Usuario usuario;
 
     private String fotoPerfil;
+    private String username;
     private String nombre;
     private String apellido;
-    private String email;
     private Date fechaRegistro;
     private Date fechaNacimiento;
+    private String telefono;
 
     // Getters y Setters
 }

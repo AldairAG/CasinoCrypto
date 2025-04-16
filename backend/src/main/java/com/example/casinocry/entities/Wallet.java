@@ -1,7 +1,5 @@
 package com.example.casinocry.entities;
 
-import java.math.BigDecimal;
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +17,6 @@ public class Wallet {
     private Usuario usuario;
 
     private String tipoCrypto; // BTC, ETH, etc.
-    private BigDecimal saldo;
     private String direccionCrypto;
     private String nombreWallet;
 

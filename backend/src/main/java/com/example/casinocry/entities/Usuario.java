@@ -8,6 +8,9 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Getter
 @Setter
@@ -16,18 +19,25 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUsuario;
 
-    private String contraseña; // Hash de la contraseña
-    private Boolean estadoCuenta; // true = activo, false = inactivo
+    @Column(nullable = false)
+    private String password; // Hash de la contraseña
+    @Column(nullable = false,columnDefinition = "VARCHAR(255) DEFAULT 'True'")
+    private Boolean estadoCuenta = true; // true = activo, false = inactivo
+    @Column(nullable = false)
     private BigDecimal saldoUsuario;
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @ManyToMany
     @JoinTable(name = "Usuario_Rol", joinColumns = @JoinColumn(name = "id_usuario"), inverseJoinColumns = @JoinColumn(name = "id_rol"))
+    @JsonIgnore
     private Set<Rol> roles;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Wallet> wallets;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private Perfil perfil;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
