@@ -1,10 +1,12 @@
 package com.example.casinocry.service.perfil;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.casinocry.repository.PerfilRepository;
 
+@Service
 public class PerfilImpl implements PerfilService {
 
     @Autowired
@@ -12,8 +14,8 @@ public class PerfilImpl implements PerfilService {
 
     @Override
     @Transactional
-    public void cambiarTelefono(Long idUser, String nuevoTelefono) {
-        perfilRepository.actualizarTeléfono(nuevoTelefono, idUser);
+    public void cambiarTelefono(Long idPerfil, String nuevoTelefono) {
+        perfilRepository.actualizarTeléfono(nuevoTelefono, idPerfil);
     }
 
     @Override

@@ -9,7 +9,7 @@ import jakarta.websocket.server.PathParam;
 
 public interface PerfilRepository extends JpaRepository<Perfil, Long> {
 
-    @Query("UPDATE Perfil p SET p.telefono = :telefonoNuevo WHERE p.user.id = :idUser")
-    int actualizarTeléfono(@PathParam("telefonoNuevo") String nuevoTelefono, @PathParam("idUser") Long idUser);
+    @Query("UPDATE Perfil p SET p.telefono = :telefonoNuevo WHERE p.idPerfil = :idPerfil")
+    int actualizarTeléfono(@PathParam("telefonoNuevo") String nuevoTelefono, @PathParam("idPerfil") Long idPerfil);
 
 }

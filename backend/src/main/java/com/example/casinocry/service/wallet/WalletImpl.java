@@ -3,6 +3,7 @@ package com.example.casinocry.service.wallet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.casinocry.dto.request.CreateWalletRequest;
@@ -11,6 +12,7 @@ import com.example.casinocry.entities.Wallet;
 import com.example.casinocry.repository.UserRepository;
 import com.example.casinocry.repository.WalletRepository;
 
+@Service
 public class WalletImpl implements WalletService {
 
     @Autowired
