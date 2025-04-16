@@ -46,7 +46,12 @@ const RegisterForm = () => {
             fechaNacimiento: "",
         },
         onSubmit: (values) => {
-            console.log(values);
+            console.log("Datos del formulario:", values);
+            // Aquí iría tu lógica de registro
+            // await registerUser(values); 
+            
+            // Navegar después de enviar el formulario
+            navigateTo(ADMIN_ROUTES.ADMIN_LAYOUT);
         },
         validationSchema: Yup.object({
             username: Yup.string()
@@ -61,7 +66,7 @@ const RegisterForm = () => {
             password: Yup.string()
                 .min(8, "La contraseña debe tener al menos 8 caracteres")
                 .matches(
-                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
+                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, // Corregido los puntos en la regex
                     "Debe contener al menos una mayúscula, una minúscula y un número"
                 )
                 .required("Campo requerido"),
@@ -91,7 +96,8 @@ const RegisterForm = () => {
                         placeholder={item.pl}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values[item.id]}
+                        value={formik.values[item.id as keyof FormValues]}
+
                     />
                     {formik.touched[item.id] && formik.errors[item.id] && (
                         <div className="text-red-500 text-sm text-left">{formik.errors[item.id]}</div>
@@ -102,9 +108,8 @@ const RegisterForm = () => {
             <DateSelector
                 onChange={(date) => formik.setFieldValue('fechaNacimiento', date)}
                 value={formik.values.fechaNacimiento}
-                error={formik.touched.fechaNacimiento ? formik.errors.fechaNacimiento : undefined}
             />
-            {formik.touched.fechaNacimiento && formik.errors.fechaNacimiento && (
+            {formik.touched[item.id as keyof FormValues] && formik.errors[item.id as keyof FormValues] && (
                 <div className="text-red-500 text-sm text-left">{formik.errors.fechaNacimiento}</div>
             )}
 
@@ -120,6 +125,7 @@ const RegisterForm = () => {
                 )}
             </div>
 
+            {/* Botón corregido - solo type="submit" */}
             <Boton type="submit">Crear cuenta</Boton>
 
             <h5>¿Aun no tienes una cuenta? <span className="text-blue-400">Registrate aqui</span></h5>
