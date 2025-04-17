@@ -151,7 +151,7 @@ const SupportContent: React.FC = () => {
         <CardDescription className="mb-6">
           Nuestro equipo de soporte se pondrá en contacto contigo pronto.
         </CardDescription>
-        <Boton
+        <Boton 
           onClick={() => setSubmitSuccess(false)}
           className="bg-blue-600 hover:bg-blue-700"
         >

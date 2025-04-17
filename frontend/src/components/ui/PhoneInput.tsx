@@ -1,48 +1,14 @@
-// import React from "react";
-// import Select from "./Select";
-// import Input from "./Input";
-
-// const countryCodes = [
-//   { code: "+52", name: "México" },
-//   { code: "+1", name: "EE.UU." },
-//   { code: "+34", name: "España" },
-//   { code: "+54", name: "Argentina" },
-//   { code: "+57", name: "Colombia" },
-// ];
-
-// const PhoneInput: React.FC = () => {
-//   return (
-//     <div className="flex space-x-2">
-//       {/* Selección de código de país */}
-//       <Select id={'lada'} className="border rounded-md p-2">
-//         {countryCodes.map(({ code, name }) => (
-//           <option key={code} value={code}>{`${name} (${code})`}</option>
-//         ))}
-//       </Select>
-
-//       {/* Input para número de teléfono */}
-//       <Input
-//         id="tele  fono" 
-//         type="tel" 
-//         className="border rounded-md p-2 w-full"
-//         placeholder="Número de teléfono"
-//       />
-//     </div>
-//   );
-// };
-
-// export default PhoneInput;
-
-
-import React from "react";
+import React, { useState } from "react";
 import Select from "./Select";
 import Input from "./Input";
 
 interface PhoneInputProps {
-  value: string;
-  onChange: (value: string) => void;
-  onBlur?: () => void;
-  error?: string;
+  value: string; // Valor completo del número de teléfono (incluyendo el código de país)
+  onChange: (value: string) => void; // Función para manejar cambios en el valor
+  onBlur?: () => void; // Función opcional para manejar el evento blur
+  error?: string; // Mensaje de error opcional
+  name: string; // Nombre del campo (para propósitos de accesibilidad o pruebas)
+  id:string; // ID del campo (para propósitos de accesibilidad o pruebas)
 }
 
 const countryCodes = [
@@ -53,51 +19,54 @@ const countryCodes = [
   { code: "+57", name: "Colombia" },
 ];
 
-const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, onBlur, error }) => {
-  const [countryCode, setCountryCode] = React.useState("+52");
-  const [phoneNumber, setPhoneNumber] = React.useState("");
+const PhoneInput: React.FC<PhoneInputProps> = ({id,name, value, onChange, onBlur, error }) => {
+  const [selectedCode, setSelectedCode] = useState(countryCodes[0].code); // Código de país seleccionado
+  const [phoneNumber, setPhoneNumber] = useState(""); // Número de teléfono ingresado
 
-  React.useEffect(() => {
-    // Actualiza el valor completo cuando cambia el código o número
-    onChange(`${countryCode} ${phoneNumber}`);
-  }, [countryCode, phoneNumber, onChange]);
+  // Manejar cambios en el código de país
+  const handleCodeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newCode = event.target.value;
+    setSelectedCode(newCode);
+    onChange(`${newCode}${phoneNumber}`); // Actualizar el valor completo
+  };
 
-  React.useEffect(() => {
-    // Inicializa los valores si hay un value inicial
-    if (value) {
-      const parts = value.split(" ");
-      if (parts.length > 1) {
-        setCountryCode(parts[0]);
-        setPhoneNumber(parts.slice(1).join(" "));
-      }
-    }
-  }, [value]);
+  // Manejar cambios en el número de teléfono
+  const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newPhone = event.target.value;
+    setPhoneNumber(newPhone);
+    onChange(`${selectedCode}${newPhone}`); // Actualizar el valor completo
+  };
 
   return (
     <div className="flex flex-col">
       <div className="flex space-x-2">
-        <Select 
-          id="lada" 
+        {/* Dropdown para seleccionar el código de país */}
+        <Select
+          id="lada"
           className="border rounded-md p-2"
-          value={countryCode}
-          onChange={(e) => setCountryCode(e.target.value)}
+          value={selectedCode}
+          onChange={handleCodeChange}
         >
           {countryCodes.map(({ code, name }) => (
             <option key={code} value={code}>{`${name} (${code})`}</option>
           ))}
         </Select>
 
+        {/* Input para ingresar el número de teléfono */}
         <Input
-          id="telefono"
+          name={name}
+          id={id}
           type="tel"
           className="border rounded-md p-2 w-full"
           placeholder="Número de teléfono"
           value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
+          onChange={handlePhoneChange}
           onBlur={onBlur}
         />
       </div>
-      {error && <div className="text-red-500 text-sm mt-1">{error}</div>}
+
+      {/* Mostrar mensaje de error si existe */}
+      {error && <span className="text-red-500 text-sm mt-1">{error}</span>}
     </div>
   );
 };

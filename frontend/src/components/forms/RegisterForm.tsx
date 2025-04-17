@@ -43,15 +43,7 @@ const RegisterForm = () => {
             telefono: "",
             nombres: "",
             apellidos: "",
-            fechaNacimiento: "",
-        },
-        onSubmit: (values) => {
-            console.log("Datos del formulario:", values);
-            // Aquí iría tu lógica de registro
-            // await registerUser(values); 
-            
-            // Navegar después de enviar el formulario
-            navigateTo(ADMIN_ROUTES.ADMIN_LAYOUT);
+            fechaNacimiento: new Date().toISOString().split('T')[0] // Formato YYYY-MM-DD,
         },
         validationSchema: Yup.object({
             username: Yup.string()
@@ -66,7 +58,7 @@ const RegisterForm = () => {
             password: Yup.string()
                 .min(8, "La contraseña debe tener al menos 8 caracteres")
                 .matches(
-                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, // Corregido los puntos en la regex
+                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
                     "Debe contener al menos una mayúscula, una minúscula y un número"
                 )
                 .required("Campo requerido"),
@@ -74,12 +66,20 @@ const RegisterForm = () => {
                 .email("Email inválido")
                 .required("Campo requerido"),
             telefono: Yup.string()
-                .matches(/^[0-9]+$/, "Solo se permiten números")
+                .matches(/^[0-9\s\+]+$/, "Solo se permiten números")
                 .min(10, "El teléfono debe tener al menos 10 dígitos"),
             fechaNacimiento: Yup.date()
                 .max(new Date(), "La fecha no puede ser futura")
                 .required("Campo requerido")
         }),
+        onSubmit: (values) => {
+            console.log("Datos del formulario:", values);
+            // Aquí iría tu lógica de registro
+            // await registerUser(values); 
+
+            // Navegar después de enviar el formulario
+            navigateTo(ADMIN_ROUTES.ADMIN_LAYOUT);
+        }
     });
 
     return (
@@ -97,11 +97,8 @@ const RegisterForm = () => {
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values[item.id as keyof FormValues]}
-
+                        required
                     />
-                    {formik.touched[item.id] && formik.errors[item.id] && (
-                        <div className="text-red-500 text-sm text-left">{formik.errors[item.id]}</div>
-                    )}
                 </div>
             ))}
 
@@ -109,20 +106,16 @@ const RegisterForm = () => {
                 onChange={(date) => formik.setFieldValue('fechaNacimiento', date)}
                 value={formik.values.fechaNacimiento}
             />
-            {formik.touched[item.id as keyof FormValues] && formik.errors[item.id as keyof FormValues] && (
-                <div className="text-red-500 text-sm text-left">{formik.errors.fechaNacimiento}</div>
-            )}
 
             <div className="text-start">
                 <label className="text-gray-500">Telefono</label>
                 <PhoneInput
+                    id="telefono"
+                    name="telefono"
                     value={formik.values.telefono}
-                    onChange={(value) => formik.setFieldValue('telefono', value)}
-                    onBlur={() => formik.setFieldTouched('telefono', true)}
+                    onChange={formik.handleChange}
+                    error={formik.errors.telefono}
                 />
-                {formik.touched.telefono && formik.errors.telefono && (
-                    <div className="text-red-500 text-sm text-left">{formik.errors.telefono}</div>
-                )}
             </div>
 
             {/* Botón corregido - solo type="submit" */}

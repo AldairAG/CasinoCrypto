@@ -43,12 +43,11 @@ import Select from "./Select";
 interface DateSelectorProps {
   onChange: (fullDate: string) => void;
   value?: string;
-  error?: string;
 }
 
 const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
 
-const DateSelector: React.FC<DateSelectorProps> = ({ onChange, value, error }) => {
+const DateSelector: React.FC<DateSelectorProps> = ({ onChange, value, ...props }) => {
     const initialDate = value ? new Date(value) : new Date();
     const [day, setDay] = React.useState<number>(initialDate.getDate());
     const [month, setMonth] = React.useState<number>(initialDate.getMonth());
@@ -99,7 +98,6 @@ const DateSelector: React.FC<DateSelectorProps> = ({ onChange, value, error }) =
                     ))}
                 </Select>
             </div>
-            {error && <div className="text-red-500 text-sm">{error}</div>}
         </div>
     );
 };
