@@ -78,6 +78,7 @@ const TabsTrigger: React.FC<TabsTriggerProps> = ({
   
     return (
       <button
+      type="button"
         className={twMerge(
           "px-4 py-2 border-b-2",
           isActive ? activeClassName : inactiveClassName,

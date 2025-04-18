@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CardHeader, CardDescription, Card, CardHead, CardContent } from "../../components/cards/Card";
 import Input from "../../components/ui/Input";
+import Boton from "../../components/ui/Boton";
 import MainDiv from "../../components/ui/MainDiv";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../../components/navigation/Tabs";
 import { ArrowUpOnSquareIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
@@ -9,6 +10,9 @@ import { useDeportes } from "../../hooks/useDeportes";
 import Loader from "../../components/ui/Loader";
 import EventItem from "../../components/items/EventItem";
 import { FormikProps, useFormik } from "formik";
+import { DocumentArrowUpIcon } from "@heroicons/react/24/outline";
+import { APUESTAS_TIPO_QUINIELA, REPARTICION_PREMIOS } from "../../constants/apuestasTipos";
+import { twMerge } from "tailwind-merge";
 
 
 const leagues = [
@@ -30,6 +34,7 @@ const quinielaModalidades = [
         nombre: "Marcador exacto",
         descripcion: "Los participantes predicen el resultado exacto del evento (por ejemplo, 2-1 para un partido de fútbol).",
         ejemplo: "Equipo A 2 - 1 Equipo B",
+        value: APUESTAS_TIPO_QUINIELA.MARCADOR_EXACTO,
         evaluacion: "Se asignan puntos si el participante acierta tanto el ganador como los goles exactos."
     },
     {
@@ -37,6 +42,7 @@ const quinielaModalidades = [
         nombre: "Resultado general",
         descripcion: "Los participantes solo predicen el resultado global del evento (ganador, empate, o perdedor).",
         ejemplo: "Equipo A gana.",
+        value: APUESTAS_TIPO_QUINIELA.RESULTADO_GENERAL,
         evaluacion: "Se asignan puntos si el participante acierta el resultado general, sin importar el marcador exacto."
     },
     {
@@ -44,6 +50,7 @@ const quinielaModalidades = [
         nombre: "Primero en marcar",
         descripcion: "Los participantes predicen qué equipo o jugador anotará el primer gol/punto.",
         ejemplo: "Equipo B será el primero en anotar.",
+        value: APUESTAS_TIPO_QUINIELA.PRIMERO_EN_MARCAR,
         evaluacion: "Se otorgan puntos si el primer anotador coincide con la predicción."
     },
     {
@@ -51,6 +58,7 @@ const quinielaModalidades = [
         nombre: "Diferencia de goles/puntos",
         descripcion: "En lugar del marcador exacto, los participantes predicen la diferencia de goles/puntos entre los equipos.",
         ejemplo: "Diferencia de goles: 1 (Equipo A gana 2-1 o 3-2).",
+        value: APUESTAS_TIPO_QUINIELA.DIFERENCIA_DE_GOL,
         evaluacion: "Se asignan puntos si se acierta la diferencia de goles/puntos, sin importar el marcador exacto."
     },
     {
@@ -58,6 +66,7 @@ const quinielaModalidades = [
         nombre: "Número total de goles/puntos",
         descripcion: "Los participantes predicen cuántos goles/puntos se anotarán en total durante el evento.",
         ejemplo: "Total: 4 goles.",
+        value: APUESTAS_TIPO_QUINIELA.MUMERO_DE_GOL,
         evaluacion: "Se otorgan puntos si el participante acierta el número total de goles/puntos combinados de ambos equipos."
     },
     {
@@ -65,15 +74,17 @@ const quinielaModalidades = [
         nombre: "Rango de resultados",
         descripcion: "Los participantes predicen rangos de resultados, como '1-3 goles', 'empate por cualquier marcador', o 'victoria amplia'.",
         ejemplo: "Equipo A gana por 2+ goles.",
+        value: APUESTAS_TIPO_QUINIELA.RANGO_RESULTADO,
         evaluacion: "Se otorgan puntos si el marcador real cae dentro del rango predicho."
     },
-    {
-        id: 7,
-        nombre: "Predicciones combinadas (parlays)",
-        descripcion: "Los participantes pueden hacer predicciones múltiples para un solo evento (por ejemplo, marcador exacto + primero en marcar).",
-        ejemplo: "Equipo A gana 3-1 y anota primero.",
-        evaluacion: "Se otorgan puntos si ambas condiciones se cumplen."
-    }
+    /*     {
+            id: 7,
+            nombre: "Predicciones combinadas (parlays)",
+            descripcion: "Los participantes pueden hacer predicciones múltiples para un solo evento (por ejemplo, marcador exacto + primero en marcar).",
+            ejemplo: "Equipo A gana 3-1 y anota primero.",
+            value: APUESTAS_TIPO_QUINIELA.,
+            evaluacion: "Se otorgan puntos si ambas condiciones se cumplen."
+        } */
 ];
 
 const formasReparticionPremio = [
@@ -81,6 +92,7 @@ const formasReparticionPremio = [
         id: 1,
         nombre: "Repartición total al ganador único",
         descripcion: "El participante con el puntaje más alto se lleva el premio completo.",
+        value: REPARTICION_PREMIOS.GANADOR_UNICO,
         ventajas: ["Simple y motivador."],
         formula: "Premio total = Acumulado – Comisiones"
     },
@@ -93,6 +105,7 @@ const formasReparticionPremio = [
             "Segundo lugar: 30%.",
             "Tercer lugar: 20%."
         ],
+        value: REPARTICION_PREMIOS.DISTRIBUCION_PROPORCIONAL,
         ventajas: ["Premia a más jugadores, incentivando la participación."]
     },
     {
@@ -103,6 +116,7 @@ const formasReparticionPremio = [
             "Cada predicción exacta otorga un bono de $50.",
             "El restante se divide entre los primeros lugares."
         ],
+        value: REPARTICION_PREMIOS.PREDICCION_EXACTA,
         ventajas: ["Incentiva predicciones arriesgadas."],
         formula: [
             "Bono por acierto = Monto fijo por evento acertado",
@@ -113,6 +127,7 @@ const formasReparticionPremio = [
         id: 4,
         nombre: "Acumulación para la siguiente quiniela",
         descripcion: "Si nadie cumple ciertos requisitos (ejemplo: puntaje mínimo), el premio se acumula para la próxima quiniela.",
+        value: REPARTICION_PREMIOS.ACUMULACION,
         ventajas: ["Aumenta el interés en futuras quinielas."],
         formula: "Premio acumulado = Premio actual + Premio anterior"
     },
@@ -120,24 +135,27 @@ const formasReparticionPremio = [
         id: 5,
         nombre: "Repartición igualitaria entre empatados",
         descripcion: "Si varios participantes tienen el puntaje más alto, el premio se divide equitativamente entre ellos.",
+        value: REPARTICION_PREMIOS.REPARTICION_IGUALITARIA,
         ventajas: ["Justo para empates."],
         formula: "Premio individual = Premio total / Número de ganadores"
     }
 ];
 
 interface QuinielaFormValues {
-    quinielaName: string;
-    cost: number;
-    startDate: Date;
-    endDate: Date;
-    description: string;
-    banner: null;
-    columns: number;
-    allowDoubleBets: boolean;
-    allowTripleBets: boolean;
+    quinielaName: string,
+    costo: number,
+    startDate: string,
+    endDate: string,
+    description: string,
+    banner: null,
+    urlBanner: string,
+    columns: number,
+    allowDoubleBets: boolean,
+    allowTripleBets: boolean,
+    tiposApuesta: string[],
+    reparticionPremio: string,
+    partidosSeleccionados: string[],
 }
-
-// Define las propiedades que el componente espera recibir
 type GeneralTabProps = {
     formik: FormikProps<QuinielaFormValues>;
 };
@@ -147,77 +165,104 @@ const CreateQuiniela = () => {
     const formik = useFormik({
         initialValues: {
             quinielaName: "",
-            cost: 0,
-            startDate: new Date(),
-            endDate: new Date(),
+            costo: 0,
+            startDate: new Date().toISOString().split("T")[0], // Formato YYYY-MM-DD
+            endDate: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split("T")[0], // Formato YYYY-MM-DD
             description: "",
             banner: null,
-            columns: 0,
+            urlBanner: "",
+            columns: 1,
             allowDoubleBets: false,
             allowTripleBets: false,
+            tiposApuesta: [APUESTAS_TIPO_QUINIELA.RESULTADO_GENERAL],
+            reparticionPremio: REPARTICION_PREMIOS.DISTRIBUCION_PROPORCIONAL,
+            partidosSeleccionados: [] as string[],
         },
         onSubmit: (values) => {
             console.log(values);
         },
     });
 
-
     return (
         <MainDiv>
-            <CardHead >
-                <CardHeader>Crear Nueva Quiniela</CardHeader>
-                <CardDescription>Configura los detalles y partidos para una nueva quiniela.</CardDescription>
-            </CardHead>
+            <form onSubmit={formik.handleSubmit}>
+                <CardHead className="flex items-center justify-between">
+                    <div>
+                        <CardHeader>Crear Nueva Quiniela</CardHeader>
+                        <CardDescription>Configura los detalles y partidos para una nueva quiniela.</CardDescription>
+                    </div>
+                    <Boton className="flex items-center justify-center gap-2">
+                        <DocumentArrowUpIcon className="h-6 w-6 text-gray-50" />
+                        Crear quiniela
+                    </Boton>
+                </CardHead>
 
-            <Tabs defaultValue="general" className="w-full mt-4">
+                <Tabs defaultValue="general" className="w-full mt-4">
 
-                <TabsList className="w-full justify-between border-2 rounded-md border-gray-200 p-1 mb-4 flex">
-                    <TabsTrigger
-                        className="w-full flex-1/4"
-                        activeClassName="bg-gray-300 border-0 rounded-md "
-                        value="general">
-                        Informacion general
-                    </TabsTrigger>
-                    <TabsTrigger
-                        className="w-full flex-1/4"
-                        activeClassName="bg-gray-300 border-0 rounded-md "
-                        value="tipos">
-                        Tipos de apuesta
-                    </TabsTrigger>
-                    <TabsTrigger
-                        className="w-full flex-1/4"
-                        activeClassName="bg-gray-300 border-0 rounded-md "
-                        value="premios">
-                        Reparticion de premios
-                    </TabsTrigger>
-                    <TabsTrigger
-                        className="w-full flex-1/4"
-                        activeClassName="bg-gray-300 border-0 rounded-md "
-                        value="partidos">
-                        Seleccion de partidos
-                    </TabsTrigger>
-                </TabsList>
+                    <TabsList className="w-full justify-between border-2 rounded-md border-gray-200 p-1 mb-4 flex">
+                        <TabsTrigger
+                            className="w-full flex-1/4"
+                            activeClassName="bg-gray-300 border-0 rounded-md "
+                            value="general">
+                            Informacion general
+                        </TabsTrigger>
+                        <TabsTrigger
+                            className="w-full flex-1/4"
+                            activeClassName="bg-gray-300 border-0 rounded-md "
+                            value="tipos">
+                            Tipos de apuesta
+                        </TabsTrigger>
+                        <TabsTrigger
+                            className="w-full flex-1/4"
+                            activeClassName="bg-gray-300 border-0 rounded-md "
+                            value="premios">
+                            Reparticion de premios
+                        </TabsTrigger>
+                        <TabsTrigger
+                            className="w-full flex-1/4"
+                            activeClassName="bg-gray-300 border-0 rounded-md "
+                            value="partidos">
+                            Seleccion de partidos
+                        </TabsTrigger>
+                    </TabsList>
 
-                <TabsContent value="general">
-                    <GeneralTab formik={formik}/>
-                </TabsContent>
-                <TabsContent value="partidos">
-                    <SeleccionarPartidosTab formik={formik}/>
-                </TabsContent>
-                <TabsContent value="premios">
-                    <ReparticionPremioTab formik={formik}/>
-                </TabsContent>
-                <TabsContent value="tipos">
-                    <QuinielaModalidadTab formik={formik}/>
-                </TabsContent>
-            </Tabs>
-
-
+                    <TabsContent value="general">
+                        <GeneralTab formik={formik} />
+                    </TabsContent>
+                    <TabsContent value="partidos">
+                        <SeleccionarPartidosTab formik={formik} />
+                    </TabsContent>
+                    <TabsContent value="premios">
+                        <ReparticionPremioTab formik={formik} />
+                    </TabsContent>
+                    <TabsContent value="tipos">
+                        <QuinielaModalidadTab formik={formik} />
+                    </TabsContent>
+                </Tabs>
+            </form>
         </MainDiv>
     )
 }
 
-const GeneralTab=({ formik }: GeneralTabProps) => {
+const GeneralTab = ({ formik }: GeneralTabProps) => {
+
+    const inputRef = useRef<HTMLInputElement | null>(null);
+
+    const handleClick = () => {
+        inputRef.current?.click();
+    };
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.currentTarget.files?.[0] || null;
+        formik.setFieldValue("banner", file);
+
+        if (file) {
+            const url = URL.createObjectURL(file);
+            formik.setFieldValue("urlBanner", url);
+        }
+    };
+
+
 
     return (
         <Card>
@@ -233,6 +278,9 @@ const GeneralTab=({ formik }: GeneralTabProps) => {
                     placeholder="Nombre de la quiniela"
                     type="text"
                     required
+                    name="quinielaName"
+                    onChange={formik.handleChange}
+                    value={formik.values.quinielaName}
                 />
 
                 <Input
@@ -240,7 +288,10 @@ const GeneralTab=({ formik }: GeneralTabProps) => {
                     label="Costo de participación"
                     placeholder="Costo de participación"
                     type="number"
+                    name="costo"
                     required
+                    onChange={formik.handleChange}
+                    value={formik.values.costo}
                 />
 
                 <Input
@@ -248,6 +299,9 @@ const GeneralTab=({ formik }: GeneralTabProps) => {
                     label="Fecha de inicio"
                     type="date"
                     required
+                    name="startDate"
+                    onChange={formik.handleChange}
+                    value={formik.values.startDate} // Formatear la fecha a YYYY-MM-DD
                 />
 
                 <Input
@@ -255,6 +309,9 @@ const GeneralTab=({ formik }: GeneralTabProps) => {
                     label="Fecha de fin"
                     type="date"
                     required
+                    name="endDate"
+                    onChange={formik.handleChange}
+                    value={formik.values.endDate} // Formatear la fecha a YYYY-MM-DD
                 />
 
                 <Input
@@ -263,34 +320,69 @@ const GeneralTab=({ formik }: GeneralTabProps) => {
                     label="Descripción"
                     placeholder="Descripción de la quiniela"
                     type="text"
-                    required
+                    name="description"
+                    value={formik.values.description}
+                    onChange={formik.handleChange}
                 />
 
                 <Input
+                    ref={inputRef}
                     classNameDiv="hidden"
                     id="banner"
                     label="Banner"
                     type="file"
                     accept="image/*"
+                    name="banner"
+                    onChange={handleChange}
                 />
 
                 <button
-                    type="button"
-                    className="col-span-2 bg-gray-200 hover:bg-gray-300 rounded-md h-32 flex items-center justify-center flex-col gap-2"
+                    onClick={handleClick}
+                    className="col-span-2 h-90 border-2 border-dashed border-gray-300 rounded-md 
+                    flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 
+                    relative overflow-hidden text-white"
+                    style={
+                        formik.values.urlBanner ? {
+                            backgroundImage: `url(${formik.values.urlBanner})`,
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                            backgroundRepeat: "no-repeat"
+                        } : {}
+                    }
                 >
-                    <ArrowUpOnSquareIcon className="h-6 w-6 text-gray-500" />
-                    Haz clic para subir una imagen
+
+                    <div className="flex flex-col items-center justify-center gap-2">
+                        <ArrowUpOnSquareIcon className="h-6 w-6 text-gray-500" />
+                        Haz clic para subir una imagen
+                    </div>
                 </button>
 
                 <div className="flex flex-col gap-2 col-span-2">
                     <label className="text-sm text-gray-500 font-semibold">Columnas de apuestas</label>
 
                     <div className="flex">
-                        <button className="border-1 border-gray-300 rounded-md p-2 flex items-center justify-center cursor-pointer hover:bg-gray-200">
+                        <button
+                            type="button"
+                            onClick={() => formik.setFieldValue("columns", Math.max(1, formik.values.columns - 1))}
+                            className="border-1 border-gray-300 rounded-md p-2 
+                            flex items-center justify-center cursor-pointer 
+                            hover:bg-gray-200">
                             <MinusIcon className="text-gray-500 w-6 h-6" />
                         </button>
-                        <input type="text" placeholder="0" className="w-30 text-center" readOnly />
-                        <button className="border-1 border-gray-300 rounded-md p-2 flex items-center justify-center hover:bg-gray-200 cursor-pointer">
+
+                        <input
+                            type="text"
+                            placeholder="0"
+                            className="w-30 text-center"
+                            readOnly
+                            value={formik.values.columns}
+                        />
+
+                        <button
+                            type="button"
+                            onClick={() => formik.setFieldValue("columns", formik.values.columns + 1)}
+                            className={"border-1 border-gray-300 rounded-md p-2 flex" +
+                                " items-center justify-center hover:bg-gray-200 cursor-pointer"}>
                             <PlusIcon className="text-gray-500 w-6 h-6" />
                         </button>
                     </div>
@@ -300,11 +392,23 @@ const GeneralTab=({ formik }: GeneralTabProps) => {
                 <div>
                     <label className="text-sm text-gray-500 font-semibold">Opciones adicionales</label>
                     <div className="flex gap-2 mt-2 items-center">
-                        <input type="checkbox" id="enable-pool" className="w-4 h-4" />
+                        <input
+                            name="allowDoubleBets"
+                            onChange={formik.handleChange}
+                            checked={formik.values.allowDoubleBets}
+                            type="checkbox"
+                            id="enable-pool"
+                            className="w-4 h-4" />
                         <label htmlFor="enable-pool" className="text-sm text-gray-500">Permitir apuestas dobles (costo x2)</label>
                     </div>
                     <div className="flex gap-2 mt-2 items-center">
-                        <input type="checkbox" id="enable-pool" className="w-4 h-4" />
+                        <input
+                            name="allowTripleBets"
+                            onChange={formik.handleChange}
+                            checked={formik.values.allowTripleBets}
+                            type="checkbox"
+                            id="enable-pool"
+                            className="w-4 h-4" />
                         <label htmlFor="enable-pool" className="text-sm text-gray-500">Permitir apuestas triples (costo x3)</label>
                     </div>
                 </div>
@@ -315,6 +419,16 @@ const GeneralTab=({ formik }: GeneralTabProps) => {
 }
 
 const QuinielaModalidadTab = ({ formik }: GeneralTabProps) => {
+
+    const handleClick = (tipo: string) => {
+        const tiposApuesta = formik.values.tiposApuesta.includes(tipo)
+            ? formik.values.tiposApuesta.filter((t) => t !== tipo)
+            : [...formik.values.tiposApuesta, tipo];
+
+        formik.setFieldValue("tiposApuesta", tiposApuesta);
+        console.log(formik.values.tiposApuesta);
+    }
+
     return (
         <Card>
             <CardHead>
@@ -324,18 +438,18 @@ const QuinielaModalidadTab = ({ formik }: GeneralTabProps) => {
 
             <CardContent className="grid grid-cols-2 gap-5">
                 {quinielaModalidades.map((modalidad) => (
-                    <label key={modalidad.id} className="flex flex-col gap-2 py-1 px-2 border rounded-md border-gray-300 pb-4 hover:bg-gray-100 cursor-pointer">
-                        <input
-                            type="radio"
-                            name="quinielaModalidad"
-                            value={modalidad.id}
-                            className="hidden"
-                        />
+                    <div key={modalidad.id}
+                        onClick={() => handleClick(modalidad.value)}
+                        className={twMerge(
+                            "flex border-1 flex-col gap-2 p-2 rounded-md border-gray-300 hover:bg-gray-100",
+                            formik.values.tiposApuesta.includes(modalidad.value) && "border-blue-500"
+                        )}
+                    >
                         <h1 className="text-lg font-semibold">{modalidad.nombre}</h1>
                         <p className="text-sm text-gray-500">{modalidad.descripcion}</p>
                         <p className="text-sm text-gray-500">Ejemplo: {modalidad.ejemplo}</p>
                         <p className="text-sm text-gray-500">Evaluación: {modalidad.evaluacion}</p>
-                    </label>
+                    </div>
                 ))}
             </CardContent>
         </Card>
@@ -343,6 +457,11 @@ const QuinielaModalidadTab = ({ formik }: GeneralTabProps) => {
 }
 
 const ReparticionPremioTab = ({ formik }: GeneralTabProps) => {
+
+    const handleClick = (tipo: string) => {
+        formik.setFieldValue("reparticionPremio", tipo);
+    }
+
     return (
         <Card>
             <CardHead>
@@ -352,8 +471,11 @@ const ReparticionPremioTab = ({ formik }: GeneralTabProps) => {
 
             <CardContent className="flex flex-wrap gap-5">
                 {formasReparticionPremio.map((forma) => (
-                    <label key={forma.id} className="flex flex-col gap-2 py-1 px-2 border w-full md:flex-1/3
-                     border-gray-300 rounded-md pb-4 hover:bg-gray-100 cursor-pointer">
+                    <label key={forma.id}
+                        onClick={() => handleClick(forma.value)}
+                        className={twMerge("flex flex-col gap-2 py-1 px-2 border w-full md:flex-1/3 " +
+                            "border-gray-300 rounded-md pb-4 hover:bg-gray-100 cursor-pointer",
+                            formik.values.reparticionPremio == (forma.value) && "border-blue-500")}>
                         <input
                             type="radio"
                             name="quinielaModalidad"
