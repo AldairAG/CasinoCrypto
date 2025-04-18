@@ -13,6 +13,7 @@ import { FormikProps, useFormik } from "formik";
 import { DocumentArrowUpIcon } from "@heroicons/react/24/outline";
 import { APUESTAS_TIPO_QUINIELA, REPARTICION_PREMIOS } from "../../constants/apuestasTipos";
 import { twMerge } from "tailwind-merge";
+import VentanaModal from "../../components/ui/VentanaModal";
 
 
 const leagues = [
@@ -23,7 +24,7 @@ const leagues = [
     { id: 4334, name: 'Ligue 1' },
     { id: 4480, name: 'Brasileirão' },
     { id: 4346, name: 'MLS' },
-    { id: 4351, name: 'Liga MX' },
+    { id: 4350, name: 'Liga MX' },
     { id: 4337, name: 'Eredivisie' },
     { id: 4344, name: 'Primeira Liga' },
 ];
@@ -155,12 +156,16 @@ interface QuinielaFormValues {
     tiposApuesta: string[],
     reparticionPremio: string,
     partidosSeleccionados: string[],
-}
+};
+
 type GeneralTabProps = {
     formik: FormikProps<QuinielaFormValues>;
 };
 
 const CreateQuiniela = () => {
+    const { eventos } = useDeportes();
+
+    const [visible, setVisible] = useState(false);
 
     const formik = useFormik({
         initialValues: {
@@ -186,6 +191,33 @@ const CreateQuiniela = () => {
     return (
         <MainDiv>
             <form onSubmit={formik.handleSubmit}>
+
+                <VentanaModal isOpen={visible} setOpen={() => setVisible(!visible)}>
+                    <div className="flex flex-col gap-4">
+                        <h1 className="text-lg font-semibold">¿Estás seguro de crear la quiniela?</h1>
+                        <p className="text-sm text-gray-500">Una vez creada, no podrás editarla.</p>
+
+                        <p className="">Resumen de quiniela</p>
+
+                        <div className="flex flex-col gap-2">
+                            <p className="text-sm font-semibold">Nombre: {formik.values.quinielaName}</p>
+                            <p className="text-sm font-semibold">Costo: {formik.values.costo}</p>
+                            <p className="text-sm font-semibold">Fecha de inicio: {formik.values.startDate}</p>
+                            <p className="text-sm font-semibold">Fecha de fin: {formik.values.endDate}</p>
+                            <p className="text-sm font-semibold">Descripción: {formik.values.description}</p>
+                            <p className="text-sm font-semibold">Columnas de apuestas: {formik.values.columns}</p>
+                            <p className="text-sm font-semibold">Tipos de apuesta: {formik.values.tiposApuesta.join(", ")}</p>
+                            <p className="text-sm font-semibold">Repartición de premios: {formik.values.reparticionPremio}</p>
+                            <p className="text-sm font-semibold">Partidos seleccionados: {formik.values.partidosSeleccionados.length}</p>
+                        </div>
+
+                        <div className="flex gap-2 justify-end">
+                            <Boton onClick={() => setVisible(false)}>Cancelar</Boton>
+                            <Boton type="submit">Crear</Boton>
+                        </div>
+                    </div>
+                </VentanaModal>
+
                 <CardHead className="flex items-center justify-between">
                     <div>
                         <CardHeader>Crear Nueva Quiniela</CardHeader>
@@ -243,6 +275,17 @@ const CreateQuiniela = () => {
         </MainDiv>
     )
 }
+
+
+
+
+
+
+
+
+
+
+
 
 const GeneralTab = ({ formik }: GeneralTabProps) => {
 
@@ -524,10 +567,10 @@ const SeleccionarPartidosTab = ({ formik }: GeneralTabProps) => {
     const { findEventosLigasFamosas, eventos } = useDeportes();
     const [selectedLeagueId, setSelectedLeagueId] = useState('4328');
     const [Loading, setLoading] = useState(true);
-    const [selectedEventIds, setSelectedEventIds] = useState<string[]>([]); // Estado para almacenar los IDs seleccionados
 
     useEffect(() => {
         fetchLiga(selectedLeagueId);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedLeagueId]);
 
     const fetchLiga = async (selectedLeagueId: string) => {
@@ -537,9 +580,16 @@ const SeleccionarPartidosTab = ({ formik }: GeneralTabProps) => {
     };
 
     const handleLeagueChange = (value: string) => {
-        console.log();
-
         setSelectedLeagueId(value);
+    };
+
+    const handleEventChange = (eventId: string) => {
+        console.log(eventId);
+        const partidosSeleccionados = formik.values.partidosSeleccionados.includes(eventId)
+            ? formik.values.partidosSeleccionados.filter((id) => id !== eventId)
+            : [...formik.values.partidosSeleccionados, eventId];
+
+        formik.setFieldValue("partidosSeleccionados", partidosSeleccionados);
     };
 
 
@@ -577,10 +627,13 @@ const SeleccionarPartidosTab = ({ formik }: GeneralTabProps) => {
                         ) : (
                             eventos.map((item) => (
                                 <EventItem
-                                    event={item}
                                     key={item.idEvent}
-                                    checked={selectedEventIds.includes(item.idEvent)} // Verifica si está seleccionado
-                                    onChange={() => handleCheckboxChange(item.idEvent)} // Maneja el cambio
+                                    event={item}
+                                    classNameCard={(
+                                        formik.values.partidosSeleccionados.includes(item.idEvent) ?
+                                            " border-blue-500 border-3" : ""
+                                    )}
+                                    onClick={() => handleEventChange(item.idEvent)}
                                 />
                             ))
                         )}
