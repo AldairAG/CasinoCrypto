@@ -2,6 +2,7 @@ package com.example.casinocry.service.quiniela;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.casinocry.dto.request.CreateQuinielaRequest;
 import com.example.casinocry.entities.Evento;
@@ -22,6 +23,7 @@ public class QuinielaImpl implements QuinielaService {
     private EventoRepository eventoRepository;
 
     @Override
+    @Transactional
     public void createQuiniela(CreateQuinielaRequest request) {
         // Crear una nueva instancia de Quiniela
         Quiniela quiniela = new Quiniela();
@@ -76,6 +78,12 @@ public class QuinielaImpl implements QuinielaService {
     public Quiniela getQuinielaById(Long id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getQuinielaById'");
+    }
+
+    @Override
+    public List<Quiniela> getAllQuinielas() {
+        // Obtener todas las quinielas de la base de datos
+        return quinielaRepository.findAll();    
     }
 
 

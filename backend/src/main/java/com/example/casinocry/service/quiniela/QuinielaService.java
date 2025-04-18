@@ -1,5 +1,7 @@
 package com.example.casinocry.service.quiniela;
 
+import java.util.List;
+
 import com.example.casinocry.dto.request.CreateQuinielaRequest;
 import com.example.casinocry.entities.Quiniela;
 
@@ -12,5 +14,7 @@ public interface QuinielaService {
     void deleteQuiniela(Long id);
 
     Quiniela getQuinielaById(Long id);
+
+    List<Quiniela> getAllQuinielas();
 
 }
