@@ -66,7 +66,7 @@ const RegisterForm = () => {
                 .email("Email inválido")
                 .required("Campo requerido"),
             telefono: Yup.string()
-                .matches(/^[0-9\s\+]+$/, "Solo se permiten números")
+                .matches(/^[0-9\s+]+$/, "Solo se permiten números")
                 .min(10, "El teléfono debe tener al menos 10 dígitos"),
             fechaNacimiento: Yup.date()
                 .max(new Date(), "La fecha no puede ser futura")

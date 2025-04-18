@@ -15,7 +15,8 @@ import com.example.casinocry.dto.response.LoginResponse;
 import com.example.casinocry.service.user.UserService;
 
 /**
- * Controlador para manejar las operaciones de autenticación, como el inicio de sesión y el registro de usuarios.
+ * Controlador para manejar las operaciones de autenticación, como el inicio de
+ * sesión y el registro de usuarios.
  */
 @Controller
 @RequestMapping("/cc/auth")
@@ -25,10 +26,30 @@ public class AuthController {
     private UserService userService; // Servicio para manejar la lógica relacionada con usuarios
 
     /**
-     * Endpoint para iniciar sesión.
-     * 
-     * @param credentials Un mapa que contiene las credenciales del usuario (email y contraseña).
-     * @return Una respuesta HTTP con el token de autenticación si las credenciales son válidas.
+     * Endpoint para iniciar sesión en la aplicación.
+     *
+     * @param credentials Un mapa que contiene las credenciales del usuario:
+     *                    - "email": El correo electrónico del usuario.
+     *                    - "password": La contraseña del usuario.
+     * @return ResponseEntity con el resultado de la operación:
+     *         - En caso de éxito (200 OK): Devuelve un objeto {@link LoginResponse} con el token de autenticación.
+     *         - En caso de error de validación (400 BAD REQUEST): Devuelve un mensaje indicando que el email y la contraseña son obligatorios.
+     *         - En caso de error de autenticación (401 UNAUTHORIZED): Devuelve un mensaje indicando credenciales inválidas o error de autenticación.
+     *
+     * Ejemplo de respuesta exitosa (200 OK):
+     * {
+     *   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+     * }
+     *
+     * Ejemplo de respuesta con error de validación (400 BAD REQUEST):
+     * {
+     *   "message": "Email y contraseña son obligatorios y no pueden estar vacíos"
+     * }
+     *
+     * Ejemplo de respuesta con error de autenticación (401 UNAUTHORIZED):
+     * {
+     *   "message": "Credenciales inválidas o error de autenticación"
+     * }
      */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
@@ -45,6 +66,7 @@ public class AuthController {
 
             // Llamar al servicio para autenticar al usuario
             LoginResponse response = userService.loginUser(email, password);
+            
             return ResponseEntity.ok(response); // Respuesta exitosa con el token de autenticación
         } catch (IllegalArgumentException e) {
             // Manejar errores de validación
@@ -60,15 +82,43 @@ public class AuthController {
     /**
      * Endpoint para registrar un nuevo usuario.
      * 
-     * @param registerRequest Un objeto que contiene los datos necesarios para registrar al usuario.
-     * @return Una respuesta HTTP con el token de autenticación si el registro es exitoso.
+     * Este endpoint permite registrar un nuevo usuario en el sistema proporcionando
+     * los datos necesarios. Si el registro es exitoso, se devuelve un token de
+     * autenticación.
+     * 
+     * Ejemplo de JSON de entrada:
+     * {
+     * "nombre": "Juan Pérez",
+     * "email": "juan.perez@example.com",
+     * "password": "contraseña123"
+     * "username":""
+     * "telefono":""
+     * "apellidos":""
+     * "fechaNacimiento":""
+     * }
+     * 
+     * Ejemplo de JSON de salida (respuesta exitosa):
+     * {
+     * "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+     * }
+     * 
+     * Ejemplo de JSON de salida (error):
+     * {
+     * "message": "El email ya está registrado"
+     * }
+     * 
+     * @param registerRequest Un objeto que contiene los datos necesarios para
+     *                        registrar al usuario.
+     * @return Una respuesta HTTP con el token de autenticación si el registro es
+     *         exitoso.
      */
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
         try {
             // Llamar al servicio para registrar al usuario
             LoginResponse response = userService.registerUser(registerRequest);
-            return ResponseEntity.status(HttpStatus.CREATED).body(response); // Respuesta exitosa con el token de autenticación
+            return ResponseEntity.status(HttpStatus.CREATED).body(response); // Respuesta exitosa con el token de
+                                                                             // autenticación
         } catch (IllegalArgumentException e) {
             // Manejar errores de validación
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)

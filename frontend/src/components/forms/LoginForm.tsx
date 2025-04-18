@@ -9,6 +9,10 @@ import * as Yup from "yup";
 const LoginForm = () => {
     const {navigateTo,login}=useUser()
 
+    const handleLogin=async(email:string,password:string)=>{
+        await login(email,password)
+    }
+
     const formik = useFormik({
         initialValues: {
             email: "",
@@ -16,6 +20,7 @@ const LoginForm = () => {
         },
         onSubmit: (values) => {
             console.log(values);
+            handleLogin(values.email,values.password);
         },
         validationSchema: Yup.object({
             email: Yup.string()

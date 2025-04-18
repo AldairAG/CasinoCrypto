@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import {userSelector  } from '../Store/slices/authSlice';
+import { userSelector } from '../Store/slices/authSlice';
 import { UserType } from '../types/UserType';
+import { authService } from '../services/casino/authService';
 
 /**
  * Hook personalizado `useUser` para gestionar el estado del usuario y la navegación en la aplicación.
@@ -22,33 +23,43 @@ import { UserType } from '../types/UserType';
  * navigateTo('/dashboard'); // Navega a la ruta '/dashboard'
  * ```
  */
-export const useUser=()=>{
+export const useUser = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const user = useSelector(userSelector.user);
     const token = useSelector(userSelector.token);
 
-    const setUser=(user:UserType)=>{
+    const setUser = (user: UserType) => {
         dispatch({ type: 'auth/setUser', payload: user });
     }
 
-    const navigateTo=(to:string)=>{
+    const navigateTo = (to: string) => {
         history.push(to);
     }
 
-    const login=()=>{}
+    const login = async (email: string, password: string) => {
+        // Aquí iría tu lógica de inicio de sesión
+        const result = await authService.loginService({ username: email, password: password })
+        // Por ejemplo, podrías llamar a una API y luego usar `setUser` para actualizar el estado global
+        setUser(result?.data?.user);
+        // setUser(loggedInUser);
+    }
 
-    const register=()=>{}
+    const register = () => {
+        // Aquí iría tu lógica de registro
+        // Por ejemplo, podrías llamar a una API y luego usar `setUser` para actualizar el estado global
+        // usar login() para iniciar sesión después de registrarse
+    }
 
 
 
-    return{
+    return {
         user,
         token,
         login,
         register,
         navigateTo,
     }
-        
-    
+
+
 }
