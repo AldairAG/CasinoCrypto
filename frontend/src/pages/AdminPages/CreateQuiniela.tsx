@@ -7,6 +7,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "../../components/navig
 import { ArrowUpOnSquareIcon, MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import Select from "../../components/ui/Select";
 import { useDeportes } from "../../hooks/useDeportes";
+import { useQuiniela } from "../../hooks/useQuiniela";
 import Loader from "../../components/ui/Loader";
 import EventItem from "../../components/items/EventItem";
 import { FormikProps, useFormik } from "formik";
@@ -14,6 +15,7 @@ import { DocumentArrowUpIcon } from "@heroicons/react/24/outline";
 import { APUESTAS_TIPO_QUINIELA, REPARTICION_PREMIOS } from "../../constants/apuestasTipos";
 import { twMerge } from "tailwind-merge";
 import VentanaModal from "../../components/ui/VentanaModal";
+import { QuinielaFormValues } from "../../types/QuinielaType";
 
 
 const leagues = [
@@ -142,21 +144,7 @@ const formasReparticionPremio = [
     }
 ];
 
-interface QuinielaFormValues {
-    quinielaName: string,
-    costo: number,
-    startDate: string,
-    endDate: string,
-    description: string,
-    banner: null,
-    urlBanner: string,
-    columns: number,
-    allowDoubleBets: boolean,
-    allowTripleBets: boolean,
-    tiposApuesta: string[],
-    reparticionPremio: string,
-    partidosSeleccionados: string[],
-};
+
 
 type GeneralTabProps = {
     formik: FormikProps<QuinielaFormValues>;
@@ -164,6 +152,11 @@ type GeneralTabProps = {
 
 const CreateQuiniela = () => {
     const { eventos } = useDeportes();
+    const {createQuiniela}=useQuiniela();
+
+    const handlCreateQuiniela = async (values:QuinielaFormValues) => {
+        await createQuiniela(values);
+    }
 
     const [visible, setVisible] = useState(false);
 
@@ -184,7 +177,7 @@ const CreateQuiniela = () => {
             partidosSeleccionados: [] as string[],
         },
         onSubmit: (values) => {
-            console.log(values);
+            handlCreateQuiniela(values);
         },
     });
 
@@ -208,7 +201,14 @@ const CreateQuiniela = () => {
                             <p className="text-sm font-semibold">Columnas de apuestas: {formik.values.columns}</p>
                             <p className="text-sm font-semibold">Tipos de apuesta: {formik.values.tiposApuesta.join(", ")}</p>
                             <p className="text-sm font-semibold">Repartición de premios: {formik.values.reparticionPremio}</p>
-                            <p className="text-sm font-semibold">Partidos seleccionados: {formik.values.partidosSeleccionados.length}</p>
+                            <p className="text-sm font-semibold">
+                                <ul>Partidos seleccionados:</ul> {
+                                    eventos.filter((item) => formik.values.partidosSeleccionados.includes(item.idEvent)).map((item) => (
+                                        <li key={item.idEvent} className="text-sm font-semibold">{item.strEvent}</li>
+    
+                                    ))
+                                }
+                            </p>
                         </div>
 
                         <div className="flex gap-2 justify-end">
@@ -223,7 +223,10 @@ const CreateQuiniela = () => {
                         <CardHeader>Crear Nueva Quiniela</CardHeader>
                         <CardDescription>Configura los detalles y partidos para una nueva quiniela.</CardDescription>
                     </div>
-                    <Boton className="flex items-center justify-center gap-2">
+                    <Boton
+                        onClick={() => setVisible(true)}
+                        type="button"
+                        className="flex items-center justify-center gap-2">
                         <DocumentArrowUpIcon className="h-6 w-6 text-gray-50" />
                         Crear quiniela
                     </Boton>

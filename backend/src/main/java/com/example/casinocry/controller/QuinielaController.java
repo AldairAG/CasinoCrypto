@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/quinielas")
+@RequestMapping("/cc/quinielas")
 public class QuinielaController {
 
     @Autowired
@@ -19,31 +19,51 @@ public class QuinielaController {
 
     @PostMapping
     public ResponseEntity<String> createQuiniela(@RequestBody CreateQuinielaRequest request) {
-        quinielaService.createQuiniela(request);
-        return ResponseEntity.ok("Quiniela creada exitosamente.");
+        try {
+            quinielaService.createQuiniela(request);
+            return ResponseEntity.ok("Quiniela creada exitosamente.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error al crear la quiniela: " + e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updateQuiniela(@PathVariable Long id) {
-        // Implementación futura
-        return ResponseEntity.status(501).body("Método no implementado.");
+        try {
+            // Implementación futura
+            return ResponseEntity.status(501).body("Método no implementado.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error al actualizar la quiniela: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteQuiniela(@PathVariable Long id) {
-        quinielaService.deleteQuiniela(id);
-        return ResponseEntity.ok("Quiniela eliminada exitosamente.");
+        try {
+            quinielaService.deleteQuiniela(id);
+            return ResponseEntity.ok("Quiniela eliminada exitosamente.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error al eliminar la quiniela: " + e.getMessage());
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Quiniela> getQuinielaById(@PathVariable Long id) {
-        Quiniela quiniela = quinielaService.getQuinielaById(id);
-        return ResponseEntity.ok(quiniela);
+        try {
+            Quiniela quiniela = quinielaService.getQuinielaById(id);
+            return ResponseEntity.ok(quiniela);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
+        }
     }
 
     @GetMapping
     public ResponseEntity<List<Quiniela>> getAllQuinielas() {
-        List<Quiniela> quinielas = quinielaService.getAllQuinielas();
-        return ResponseEntity.ok(quinielas);
+        try {
+            List<Quiniela> quinielas = quinielaService.getAllQuinielas();
+            return ResponseEntity.ok(quinielas);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
+        }
     }
 }
