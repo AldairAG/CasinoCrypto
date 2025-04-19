@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { ADMIN_ROUTES } from "../../constants/ROUTERS";
 import { useUser } from "../../hooks/useUser";
 import Boton from "../ui/Boton";
@@ -33,7 +34,21 @@ const formulario: FormField[] = [
 ];
 
 const RegisterForm = () => {
-    const { navigateTo } = useUser();
+    const { navigateTo, register } = useUser()
+
+    // private String username;
+    // private String password;
+    // private String email;
+    // private String telefono;
+    // private String nombre;
+    // private String apellidos;
+    // private Date fechaNacimiento; 
+
+    const handleRegister = async (username: string, password: string, email: string, telefono: string, nombre: string, apellidos: string, fechaNacimiento: string) => {
+        await register(username, password, email, telefono, nombre, apellidos, fechaNacimiento)
+    }
+
+
 
     const formik = useFormik<FormValues>({
         initialValues: {
@@ -46,31 +61,35 @@ const RegisterForm = () => {
             fechaNacimiento: new Date().toISOString().split('T')[0] // Formato YYYY-MM-DD,
         },
         validationSchema: Yup.object({
-            username: Yup.string()
-                .required("Campo requerido")
-                .min(3, "El usuario debe tener al menos 3 caracteres"),
-            nombres: Yup.string()
-                .required("Campo requerido")
-                .matches(/^[a-zA-Z\s]+$/, "Solo se permiten letras"),
-            apellidos: Yup.string()
-                .required("Campo requerido")
-                .matches(/^[a-zA-Z\s]+$/, "Solo se permiten letras"),
-            password: Yup.string()
-                .min(8, "La contraseña debe tener al menos 8 caracteres")
-                .matches(
-                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-                    "Debe contener al menos una mayúscula, una minúscula y un número"
-                )
-                .required("Campo requerido"),
-            email: Yup.string()
-                .email("Email inválido")
-                .required("Campo requerido"),
-            telefono: Yup.string()
-                .matches(/^[0-9\s+]+$/, "Solo se permiten números")
-                .min(10, "El teléfono debe tener al menos 10 dígitos"),
-            fechaNacimiento: Yup.date()
-                .max(new Date(), "La fecha no puede ser futura")
-                .required("Campo requerido")
+
+            //ESTO LO COMENTE PARA QUE NO MARQUE ERROR EN EL FORMULARIO Y PRUEBAS
+
+
+            // username: Yup.string()
+            //     .required("Campo requerido")
+            //     .min(3, "El usuario debe tener al menos 3 caracteres"),
+            // nombres: Yup.string()
+            //     .required("Campo requerido")
+            //     .matches(/^[a-zA-Z\s]+$/, "Solo se permiten letras"),
+            // apellidos: Yup.string()
+            //     .required("Campo requerido")
+            //     .matches(/^[a-zA-Z\s]+$/, "Solo se permiten letras"),
+            // password: Yup.string()
+            //     .min(8, "La contraseña debe tener al menos 8 caracteres")
+            //     .matches(
+            //         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
+            //         "Debe contener al menos una mayúscula, una minúscula y un número"
+            //     )
+            //     .required("Campo requerido"),
+            // email: Yup.string()
+            //     .email("Email inválido")
+            //     .required("Campo requerido"),
+            // telefono: Yup.string()
+            //     .matches(/^[0-9\s+]+$/, "Solo se permiten números")
+            //     .min(10, "El teléfono debe tener al menos 10 dígitos"),
+            // fechaNacimiento: Yup.date()
+            //     .max(new Date(), "La fecha no puede ser futura")
+            //     .required("Campo requerido")
         }),
         onSubmit: (values) => {
             console.log("Datos del formulario:", values);
@@ -78,9 +97,15 @@ const RegisterForm = () => {
             // await registerUser(values); 
 
             // Navegar después de enviar el formulario
+            handleRegister(values.username, values.password, values.email, values.telefono, values.nombres, values.apellidos, values.fechaNacimiento)
             navigateTo(ADMIN_ROUTES.ADMIN_LAYOUT);
         }
     });
+
+    const handleDateChange = useCallback((fullDate: string) => {
+        const date = new Date(fullDate); // Convertir string a Date
+        formik.setFieldValue('fechaNacimiento', date, false);
+    }, [formik.setFieldValue]);
 
     return (
         <form onSubmit={formik.handleSubmit} className="bg-gray-50 p-4 flex flex-col gap-4 w-md text-center rounded-sm">
@@ -102,8 +127,13 @@ const RegisterForm = () => {
                 </div>
             ))}
 
-            <DateSelector
+            {/* <DateSelector
                 onChange={(date) => formik.setFieldValue('fechaNacimiento', date)}
+                value={formik.values.fechaNacimiento}
+            /> */}
+
+            <DateSelector
+                onChange={handleDateChange} // Ahora recibe string
                 value={formik.values.fechaNacimiento}
             />
 

@@ -45,10 +45,38 @@ export const useUser = () => {
         // setUser(loggedInUser);
     }
 
-    const register = () => {
-        // Aquí iría tu lógica de registro
-        // Por ejemplo, podrías llamar a una API y luego usar `setUser` para actualizar el estado global
-        // usar login() para iniciar sesión después de registrarse
+    // Función para registrar un nuevo usuario aqui se indicaba que se requeria ocupar login despues de registrar
+    // para que el usuario no tenga que iniciar sesion nuevamente
+    const register = async (
+        username: string,
+        password: string,
+        email: string,
+        telefono: string,
+        nombre: string,
+        apellidos: string,
+        fechaNacimiento: string
+    ) => {
+        try {
+            // 1. Registro inicial
+            const registerRequest = {
+                username,
+                password,
+                email,
+                telefono,
+                nombre,
+                apellidos,
+                fechaNacimiento
+            };
+            await authService.registerService(registerRequest);
+    
+            // 2. Login automático con las mismas credenciales
+            const loginResult = await login(email, password);
+            
+            return loginResult;
+        } catch (error) {
+            console.error("Error en el proceso de registro:", error);
+            throw error;
+        }
     }
 
 

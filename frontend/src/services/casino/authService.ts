@@ -19,7 +19,29 @@ export const loginService = async (request: { username: string; password: string
     }
 }
 
-export const registerService = async () => {}
+// export const registerService = async () => {
+    
+// }
+
+// En tu archivo authService.ts
+export const registerService = async (request: {
+    //Variables que se envian al backend para el registro
+    username: string;
+    password: string;
+    email: string;
+    telefono: string;
+    nombre: string;
+    apellidos: string;
+    fechaNacimiento: string;
+}) => {
+    try {
+        const result = await apiClient.post('/auth/register', request);
+        return result;
+    } catch (error) {
+        console.error("Error en el servicio de registro:", error);
+        throw error;
+    }
+}
 
 export const authService={
     loginService,
