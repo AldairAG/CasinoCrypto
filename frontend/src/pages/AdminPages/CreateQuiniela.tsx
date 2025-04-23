@@ -576,6 +576,8 @@ const SeleccionarPartidosTab = ({ formik }: GeneralTabProps) => {
     const fetchLiga = async (selectedLeagueId: string) => {
         setLoading(true);
         await findEventosLigasFamosas(selectedLeagueId);
+        console.log(eventos);
+        
         setLoading(false);
     };
 
