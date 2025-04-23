@@ -1,9 +1,15 @@
 package com.example.casinocry.entities;
 
+import java.time.LocalDateTime;
+
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
@@ -13,13 +19,12 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Prediccion {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo_prediccion", discriminatorType = DiscriminatorType.STRING)
+public abstract class Prediccion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPrediccion;
-    private Integer golesLocal;
-    private Integer golesVisitante;
-    private String prediccion; // local/empate/visitante
 
     @ManyToOne
     @JoinColumns({
@@ -32,5 +37,10 @@ public class Prediccion {
     @JoinColumn(name = "id_partido", nullable = false)
     private Partido partido;
 
-    // Getters y Setters
+    private Boolean esDoble = false;
+    private Boolean esTriple = false;
+
+    private Boolean acertada;
+
+    private LocalDateTime fechaCreacion = LocalDateTime.now();
 }
