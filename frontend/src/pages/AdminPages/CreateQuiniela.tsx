@@ -14,6 +14,7 @@ import { DocumentArrowUpIcon } from "@heroicons/react/24/outline";
 import { APUESTAS_TIPO_QUINIELA, REPARTICION_PREMIOS } from "../../constants/apuestasTipos";
 import { twMerge } from "tailwind-merge";
 import VentanaModal from "../../components/ui/VentanaModal";
+import { useQuiniela } from "../../hooks/useQuiniela";
 
 
 const leagues = [
@@ -164,6 +165,7 @@ type GeneralTabProps = {
 
 const CreateQuiniela = () => {
     const { eventos } = useDeportes();
+    const { createQuiniela } = useQuiniela();
 
     const [visible, setVisible] = useState(false);
 
@@ -185,6 +187,19 @@ const CreateQuiniela = () => {
         },
         onSubmit: (values) => {
             console.log(values);
+            createQuiniela({
+                nombreQuiniela: values.quinielaName,
+                fechaInicio: values.startDate,
+                fechaFin: values.endDate,
+                precioParticipacion: values.costo,
+                strDescripcion: values.description,
+                intColumnas: values.columns,
+                allowDoubleBets: values.allowDoubleBets,
+                allowTripleBets: values.allowTripleBets,
+                tipoPremio: values.reparticionPremio,
+                tiposApuesta: values.tiposApuesta,
+                eventos: values.partidosSeleccionados,
+            })
         },
     });
 

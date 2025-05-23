@@ -1,17 +1,19 @@
 package com.example.casinocry.controller;
 
+import com.example.casinocry.dto.request.ArmarQuinielaRequest;
 import com.example.casinocry.dto.request.CreateQuinielaRequest;
 import com.example.casinocry.entities.Quiniela;
 import com.example.casinocry.service.quiniela.QuinielaService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/quinielas")
+@RequestMapping("/cc/quinielas")
 public class QuinielaController {
 
     @Autowired
@@ -19,8 +21,19 @@ public class QuinielaController {
 
     @PostMapping
     public ResponseEntity<String> createQuiniela(@RequestBody CreateQuinielaRequest request) {
-        quinielaService.createQuiniela(request);
-        return ResponseEntity.ok("Quiniela creada exitosamente.");
+        try {
+            quinielaService.createQuiniela(request);
+            return ResponseEntity.ok("Quiniela creada exitosamente.");
+        } catch (IllegalArgumentException e) {
+            // Manejo de errores por argumentos inválidos
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        } catch (RuntimeException e) {
+            // Manejo de errores específicos de negocio
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        } catch (Exception e) {
+            // Manejo de errores generales
+            return ResponseEntity.status(500).body("Error interno del servidor: " + e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
@@ -37,13 +50,38 @@ public class QuinielaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Quiniela> getQuinielaById(@PathVariable Long id) {
-        Quiniela quiniela = quinielaService.getQuinielaById(id);
-        return ResponseEntity.ok(quiniela);
+        try {
+            Quiniela quiniela = quinielaService.getQuinielaById(id);
+            if (quiniela == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(quiniela);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @GetMapping
     public ResponseEntity<List<Quiniela>> getAllQuinielas() {
-        List<Quiniela> quinielas = quinielaService.getAllQuinielas();
-        return ResponseEntity.ok(quinielas);
+        try {
+            List<Quiniela> quinielas = quinielaService.getAllQuinielas();
+            return ResponseEntity.status(HttpStatus.OK).body(quinielas);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+    @PostMapping("/armar")
+    public ResponseEntity<String> armarQuiniela(@RequestBody ArmarQuinielaRequest request) {
+        try {
+            quinielaService.armarQuiniela(request);
+            return ResponseEntity.ok("Usuario y predicciones asociadas exitosamente a la quiniela.");
+        } catch (RuntimeException e) {
+            // Manejo de errores específicos de negocio
+            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+        } catch (Exception e) {
+            // Manejo de errores generales
+            return ResponseEntity.status(500).body("Error interno del servidor: " + e.getMessage());
+        }
     }
 }

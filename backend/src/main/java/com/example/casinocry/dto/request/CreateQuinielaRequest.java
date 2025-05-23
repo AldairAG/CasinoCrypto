@@ -9,8 +9,16 @@ import lombok.Setter;
 @Setter
 @Getter
 public class CreateQuinielaRequest {
-    private Long idQuiniela;
-    private Long idEvento;
-    private boolean esDoble;
-    private boolean esTriple;
+    private String nombreQuiniela;
+    private Date fechaInicio;
+    private Date fechaFin;
+    private Float precioParticipacion;
+    private String strDescripcion;
+    private String banner;
+    private Integer intColumnas;
+    private Boolean allowDoubleBets;
+    private Boolean allowTripleBets;
+    private String tipoPremio;
+    private List<String> tiposApuesta;
+    private List<Long> eventos;
 }

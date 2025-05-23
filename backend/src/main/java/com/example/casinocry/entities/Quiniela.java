@@ -3,6 +3,9 @@ package com.example.casinocry.entities;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,6 +36,7 @@ public class Quiniela {
     private List<String> tiposApuestas;
 
     @ManyToMany
+    @JsonManagedReference
     @JoinTable(
         name = "quiniela_evento", // Nombre de la tabla intermedia
         joinColumns = @JoinColumn(name = "id_quiniela"), // Columna que referencia a Quiniela
@@ -41,5 +45,6 @@ public class Quiniela {
     private List<Evento> eventos;
 
     @OneToMany(mappedBy = "quiniela", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<UsuarioQuiniela> usuarios;
 }

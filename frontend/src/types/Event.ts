@@ -1,4 +1,4 @@
-export type Event= {
+export type Event = {
     dateEvent: ""
     dateEventLocal: null
     idAPIfootball: ""
@@ -47,4 +47,11 @@ export type Event= {
     strTweet3: null
     strVenue: ""
     strVideo: null
+}
+
+export type EventResponseApi = {
+    idEvento: number;
+    equipoLocal: string | null;
+    equipoVisitante: string | null;
+    fechaPartido: string | null;
 }

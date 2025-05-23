@@ -3,7 +3,7 @@ export const USER_ROUTES = {
     USER_LAYOUT: '/c/',
     HOME: '/c/home',
     QUINIELAS_LIST: '/c/quniela-list',
-    QUINIELA: '/c/quniela',
+    QUINIELA: '/c/quniela/:id',
     CARRITO: '/c/carrito',
     DEPOSITAR: '/c/depositar',
     RETIRAR: '/c/retirar',

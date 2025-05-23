@@ -12,6 +12,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PrediccionPrimeroEnMarcar extends Prediccion {
-
-    private String equipoOMarcador; // equipo o jugador
+    private Long equipoOMarcador; // equipo o jugador
 }

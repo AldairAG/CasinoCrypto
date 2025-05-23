@@ -1,20 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { deportesSelector } from '../Store/slices/deportesSlice.js';
+import { clearEvento, clearEventos, deportesSelector } from '../Store/slices/deportesSlice.js';
 import { Event } from '../types/Event.js';
 import { deportesService } from '../services/deportes/partidoService.ts';
-
-const popularLeagueIds = [
-    4328, // Premier League
-    4335, // La Liga
-    4332, // Serie A
-    4331, // Bundesliga
-    4334, // Ligue 1
-    4480, // Brasileirao
-    4346, // MLS
-    4351, // Liga MX
-    4337, // Eredivisie
-    4344, // Primeira Liga
-];
 
 /**
  * Hook personalizado `useDeportes` para manejar la lógica relacionada con deportes, ligas y eventos.
@@ -39,9 +26,15 @@ export const useDeportes = () => {
     const ligas = useSelector(deportesSelector.ligas);
     const deportes = useSelector(deportesSelector.deportes);
     const eventos = useSelector(deportesSelector.eventos);
+    const evento = useSelector(deportesSelector.evento);
+    
 
-    const setEventos = (data: Event[]) => {
+    const setEventos = (data: Event[]) => {        
         dispatch({ type: 'deportes/setEventos', payload: data });
+    };
+
+    const setEvento = (data: Event) => {
+        dispatch({ type: 'deportes/setEvento', payload: data });
     };
 
     const findEventosLigasFamosas = async (idLiga:string) => {
@@ -53,8 +46,30 @@ export const useDeportes = () => {
         }
     }
 
+    const getEventosByIds = async (ids: string[]) => {
+        try {
+            clearEventos();
+            const result = await deportesService.getEventsByIdsService(ids);
+            setEventos(result);
+        } catch (error) {
+            console.log('Error fetching eventos:', error);
+        }
+    }
+
+    const getEventosById = async (id: string) => {
+        try {
+            clearEvento();
+            const result = await deportesService.getEventByIdService(id);
+            setEvento(result);
+        } catch (error) {
+            console.log('Error fetching eventos:', error);
+        }
+    }
+
     return {
         eventos,
-        findEventosLigasFamosas
+        findEventosLigasFamosas,
+        getEventosByIds,
+        getEventosById,
     }
 }

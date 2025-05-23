@@ -25,11 +25,5 @@ public class Partido {
     private Date fechaPartido;
     private String resultadoFinal; // local/empate/visitante
 
-    @OneToMany(mappedBy = "partido", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Prediccion> predicciones;
-
-    @OneToMany(mappedBy = "partido", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Apuesta> apuestas;
-
     // Getters y Setters
 }

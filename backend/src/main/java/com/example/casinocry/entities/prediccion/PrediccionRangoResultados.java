@@ -13,5 +13,6 @@ import lombok.Setter;
 @Setter
 public class PrediccionRangoResultados extends Prediccion {
 
-    private String rango; // Ej: "1-3 goles", "victoria amplia", etc.
+    private String rangoLocal; // Ej: "1-3 goles", "victoria amplia", etc.
+    private String rangoVisitante; // Ej: "1-3 goles", "victoria amplia", etc.
 }

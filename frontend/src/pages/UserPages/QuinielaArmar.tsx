@@ -1,485 +1,332 @@
-// import { useState } from "react";
-// import { Card, Badge, CardHeader, CardDescription, CardHead, CardContent } from "../../components/cards/Card";
-// import Boton from "../../components/ui/Boton";
-// import BotonQuiniela from "../../components/ui/BotonQuiniela";
-// import { Tabs, TabsList, TabsTrigger, TabsContent } from "../../components/ui/CustomTabs";
-// import Select from "../../components/ui/Select";
-// import { Event } from "../../types/Event";
-
-// const quinielas = {
-//     id: 1,
-//     nombre: "Liga Española - Jornada 28",
-//     fechaCierre: "2025-03-15T18:00:00",
-//     partidos: [
-//         { id: 1, local: "Barcelona", visitante: "Real Madrid", fecha: "2025-03-15T20:00:00", estadio: "Camp Nou", liga: "La Liga" },
-//         { id: 2, local: "Atlético Madrid", visitante: "Sevilla", fecha: "2025-03-15T18:30:00", estadio: "Metropolitano", liga: "La Liga" },
-//         { id: 3, local: "Valencia", visitante: "Villarreal", fecha: "2025-03-16T16:00:00", estadio: "Mestalla", liga: "La Liga" },
-//         {
-//             id: 4,
-//             local: "Athletic Bilbao",
-//             visitante: "Real Sociedad",
-//             fecha: "2025-03-16T18:30:00",
-//             estadio: "San Mamés",
-//             liga: "La Liga"
-//         },
-//         { id: 5, local: "Betis", visitante: "Espanyol", fecha: "2025-03-16T14:00:00", estadio: "Benito Villamarín", liga: "La Liga" },
-//     ],
-//     premio: "€100,000",
-//     participantes: 24563,
-//     precioApuesta: 5,
-//     bolsaTotal: "$245,630",
-//     distribucion: "70/20/10",
-//     cierre: "2d 14h"
-// };
-
-
-// const QuienielaArmar = () => {
-
-//     return (
-//         <main className="px-4 max-w-[1600px] w-full space-y-4">
-//             {/* Header se mantiene igual */}
-// <header className="space-y-4 pt-6 mb-8">
-//     <div className="flex justify-between items-center mb-8">
-//         <button className=" flex items-center gap-5 ms-5">
-//             <i className="text-gray-900">
-//                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
-//                     <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8" />
-//                 </svg>
-//             </i>
-//             <label>Regresar a las quinielas</label>
-//         </button>
-//         <label className="text-gray-700 hover:text-blue-400 hover:underline">¿Cómo se juega a Quiniela?</label>
-//     </div>
-
-//     <h1 className="text-3xl">Liga Española - Jornada 28</h1>
-//     <div className="flex justify-start gap-10">
-//         <div className="text-gray-500 flex items-center gap-2">
-//             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-calendar" viewBox="0 0 16 16">
-//                 <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-//             </svg>
-//             <span className="text-gray-500 font-semibold"> Cierra en: <span className="border rounded-md p-1 border-gray-300">5 horas restantes</span></span>
-//         </div>
-//         <div className="flex items-center gap-2">
-//             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="text-amber-400 bi bi-trophy text-lg" viewBox="0 0 16 16">
-//                 <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5q0 .807-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33 33 0 0 1 2.5.5m.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935m10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935M3.504 1q.01.775.056 1.469c.13 2.028.457 3.546.87 4.667C5.294 9.48 6.484 10 7 10a.5.5 0 0 1 .5.5v2.61a1 1 0 0 1-.757.97l-1.426.356a.5.5 0 0 0-.179.085L4.5 15h7l-.638-.479a.5.5 0 0 0-.18-.085l-1.425-.356a1 1 0 0 1-.757-.97V10.5A.5.5 0 0 1 9 10c.516 0 1.706-.52 2.57-2.864.413-1.12.74-2.64.87-4.667q.045-.694.056-1.469z" />
-//             </svg>
-//             <span className="text-gray-500 font-semibold"> Premio: $100,000</span>
-//         </div>
-//         <div className="text-gray-500 flex items-center gap-2">
-//             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-people" viewBox="0 0 16 16">
-//                 <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4" />
-//             </svg>
-//             <span className="text-gray-500 font-semibold">Participantes: 24,563</span>
-//         </div>
-//         <div className="text-gray-500 flex items-center gap-2">
-//             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-coin" viewBox="0 0 16 16">
-//                 <path d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518z" />
-//                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-//                 <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11m0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12" />
-//             </svg>
-//             <span className="text-gray-500 font-semibold">Precio por apuesta: $15.00</span>
-//         </div>
-//     </div>
-// </header>
-
-//             {/* Sección de Modos de Juego con Custom Tabs */}
-//             <Tabs defaultValue="marcador_exacto">
-//                 <TabsList className="mb-6">
-//                     <TabsTrigger value="marcador_exacto">Marcador Exacto</TabsTrigger>
-//                     <TabsTrigger value="primero_en_marcar">Primero en Marcar</TabsTrigger>
-//                     <TabsTrigger value="resultado_general">Resultado General</TabsTrigger>
-//                     <TabsTrigger value="numero_de_gol">Número de Goles</TabsTrigger>
-//                     <TabsTrigger value="diferencia_de_gol">Diferencia de Gol</TabsTrigger>
-//                     <TabsTrigger value="rango_resultado">Rango Resultado</TabsTrigger>
-//                 </TabsList>
-
-//                 {/* Contenido descriptivo de cada modo */}
-//                 <TabsContent value="marcador_exacto">
-//                     <CardHead>
-//                         <CardHeader>Marcador exacto</CardHeader>
-//                         <CardDescription className="text-sm text-blue-800">
-//                             Predice el resultado exacto de cada partido. Obtienes puntos solo si aciertas el marcador final.
-//                         </CardDescription>
-//                     </CardHead>
-
-//                 </TabsContent>
-
-//                 <TabsContent value="primero_en_marcar">
-//                     <CardHead>
-//                         <CardHeader>Marcador exacto</CardHeader>
-//                         <CardDescription className="text-sm text-blue-800">
-//                             Predice el resultado exacto de cada partido. Obtienes puntos solo si aciertas el marcador final.
-//                         </CardDescription>
-//                     </CardHead>
-
-//                     <CardContent className="text-sm text-blue-800">
-//                         <table className="w-full">
-//                             <thead className="bg-gray-200">
-//                                 <tr>
-//                                     <th className="p-2 text-left">Partido</th>
-//                                 </tr>
-//                             </thead>
-//                             <tbody>
-//                                 {/* {eventosList.map((evento, index) => (
-//                                     <tr key={index} className="border-b border-gray-300">
-//                                         {/* <item {evento.idEvent}> 
-//                                     </tr>
-//                                 ))} */}
-//                             </tbody>
-//                         </table>
-//                     </CardContent>
-
-//                 </TabsContent>
-//             </Tabs>
-
-//             {/* Sección de Tarjetas de Estadísticas */}
-//             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-//                 {/* Tarjetas de Participantes, Bolsa Total, Distribución y Cierre */}
-//                 {/* ... (igual que en el código anterior) ... */}
-//             </div>
-
-//             {/* Resto del código (Pleno al 15, resumen, etc.) */}
-//             {/* ... (igual que en el código anterior) ... */}
-
-
-//         </main>
-//     );
-// };
-
-// export default QuienielaArmar;
-
-
-import { Card, Badge, CardHeader, CardDescription, CardHead, CardContent } from "../../components/cards/Card";
+import { Link, useParams } from "react-router-dom";
+import { CardHeader, CardDescription, CardHead, CardContent } from "../../components/cards/Card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../../components/ui/CustomTabs";
+import {
+    TrophyIcon,
+    CalendarIcon,
+    UserGroupIcon,
+    CurrencyDollarIcon,
+    ArrowLongLeftIcon,
+    ShoppingCartIcon
+} from "@heroicons/react/24/outline";
+import { USER_ROUTES } from "../../constants/ROUTERS";
+import { useQuiniela } from "../../hooks/useQuiniela";
+import { useEffect, useState, useCallback, memo } from "react";
+import { useDeportes } from "../../hooks/useDeportes";
+import { PrimeroEnMarcarItem, MarcadorExactoItem } from "../../components/items/QuinielaItems";
+import Loader from "../../components/ui/Loader";
+import { calcularTiempoRestante } from "../../utils/dateUtils";
+import { PrediccionPost } from "../../types/Prediccion";
+import { useCarrito } from "../../hooks/useCarrito";
+import { QuinielaPostType, QuinielaType } from "../../types/QinielaType";
+import { Event, EventResponseApi } from "../../types/Event";
 
-// Definición de tipos
-interface Partido {
-    id: number;
-    local: string;
-    visitante: string;
-    fecha: string;
-    estadio: string;
-    liga: string;
+interface EventosTabProps {
+    loading: boolean;
+    eventos: Event[];
+    title: string;
+    description: string;
+    ItemComponent: React.ComponentType<{ item: Event }>;
+    modalidad: string;
+    onAddToCart: (modalidad: string) => void;
+    isInCartMap: Record<string, boolean>;
 }
 
-interface Quiniela {
-    id: number;
-    nombre: string;
-    fechaCierre: string;
-    partidos: Partido[];
-    premio?: string;
-    participantes?: number;
-    precioApuesta?: number;
-    bolsaTotal?: string;
-    distribucion?: string;
-    cierre?: string;
-}
+// Contenido de las pestañas
+const tabContents = [
+    {
+        value: "marcador_exacto",
+        title: "Marcador exacto",
+        description: "Predice el resultado exacto de cada partido. Obtienes puntos solo si aciertas el marcador final.",
+        component: MarcadorExactoItem
+    },
+    {
+        value: "primero_en_marcar",
+        title: "Primero en Marcar",
+        description: "Predice qué equipo anotará el primer gol en cada partido.",
+        component: PrimeroEnMarcarItem
+    },
+    {
+        value: "resultado_general",
+        title: "Resultado General",
+        description: "Predice si el partido terminará en victoria local, empate o victoria visitante.",
+        component: PrimeroEnMarcarItem
+    },
+    {
+        value: "numero_de_gol",
+        title: "Número de Goles",
+        description: "Predice el número total de goles que se anotarán en cada partido.",
+        component: PrimeroEnMarcarItem
+    },
+    {
+        value: "diferencia_de_gol",
+        title: "Diferencia de Gol",
+        description: "Predice la diferencia de goles entre los equipos al final del partido.",
+        component: PrimeroEnMarcarItem
+    },
+    {
+        value: "rango_resultado",
+        title: "Rango Resultado",
+        description: "Predice el rango de goles para cada equipo (0, 1-2, 3+).",
+        component: PrimeroEnMarcarItem
+    }
+];
 
-const quinielas: Quiniela = {
-    id: 1,
-    nombre: "Liga Española - Jornada 28",
-    fechaCierre: "2025-03-15T18:00:00",
-    partidos: [
-        { id: 1, local: "Barcelona", visitante: "Real Madrid", fecha: "2025-03-15T20:00:00", estadio: "Camp Nou", liga: "La Liga" },
-        { id: 2, local: "Atlético Madrid", visitante: "Sevilla", fecha: "2025-03-15T18:30:00", estadio: "Metropolitano", liga: "La Liga" },
-        { id: 3, local: "Valencia", visitante: "Villarreal", fecha: "2025-03-16T16:00:00", estadio: "Mestalla", liga: "La Liga" },
-        { id: 4, local: "Athletic Bilbao", visitante: "Real Sociedad", fecha: "2025-03-16T18:30:00", estadio: "San Mamés", liga: "La Liga" },
-        { id: 5, local: "Betis", visitante: "Espanyol", fecha: "2025-03-16T14:00:00", estadio: "Benito Villamarín", liga: "La Liga" },
-    ],
-    premio: "€100,000",
-    participantes: 24563,
-    precioApuesta: 5,
-    bolsaTotal: "$245,630",
-    distribucion: "70/20/10",
-    cierre: "2d 14h"
-};
+// Componente para mostrar mensaje
+const Message = memo(({ text, type }: { text: string, type: string }) => {
+    if (!text) return null;
 
-// Componente reutilizable para la información común del partido
-const PartidoInfo = ({ partido }: { partido: Partido }) => (
-    <>
-        <div className="flex justify-between items-center">
-            <Badge className="!text-xs">{partido.liga}</Badge>
-            <span className="text-sm text-gray-500">
-                {new Date(partido.fecha).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+    return (
+        <div className={`p-3 rounded-lg ${type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+            {text}
+        </div>
+    );
+});
+
+// Componente para información de quiniela
+const QuinielaInfo = memo(({ quiniela }: { quiniela: QuinielaType|null }) => (
+    <div className="flex justify-start gap-10">
+        <div className="text-gray-500 flex items-center gap-2">
+            <CalendarIcon className="h-5 w-5 text-text-500" />
+            <span className="text-gray-500 font-semibold">
+                Cierra en: {quiniela?.fechaFin ? calcularTiempoRestante(quiniela.fechaFin) : "Fecha no disponible"}
             </span>
         </div>
-
-        <div className="grid grid-cols-5 items-center gap-2">
-            <div className="col-span-2 text-right">
-                <div className="font-medium truncate">{partido.local}</div>
-            </div>
-
-            <div className="flex justify-center">
-                <span className="font-bold">vs</span>
-            </div>
-
-            <div className="col-span-2">
-                <div className="font-medium truncate">{partido.visitante}</div>
-            </div>
+        <div className="flex items-center gap-2">
+            <TrophyIcon className="h-5 w-5 text-yellow-600" />
+            <span className="text-gray-500 font-semibold"> Premio: $100,000</span>
         </div>
+        <div className="text-gray-500 flex items-center gap-2">
+            <UserGroupIcon className="h-5 w-5 text-gray-500" />
+            <span className="text-gray-500 font-semibold">Participantes: 24,563</span>
+        </div>
+        <div className="text-gray-500 flex items-center gap-2">
+            <CurrencyDollarIcon className="h-5 w-5 text-gray-500" />
+            <span className="text-gray-500 font-semibold">
+                Precio por apuesta: ${quiniela?.precioParticipacion || 15}.00
+            </span>
+        </div>
+    </div>
+));
 
-        <div className="text-xs text-gray-500">{partido.estadio}</div>
+// Componente para los eventos de una pestaña con su propio botón de agregar al carrito
+const EventosTab = memo(({
+    loading,
+    eventos,
+    title,
+    description,
+    ItemComponent,
+    modalidad,
+    onAddToCart,
+    isInCartMap
+}: EventosTabProps) => (
+    <>
+        <CardHead>
+            <div className="flex justify-between items-center">
+                <div>
+                    <CardHeader>{title}</CardHeader>
+                    <CardDescription className="text-sm text-blue-800">
+                        {description}
+                    </CardDescription>
+                </div>
+                <button
+                    onClick={() => onAddToCart(modalidad)}
+                    disabled={isInCartMap[modalidad]}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg shadow 
+                        ${isInCartMap[modalidad]
+                            ? 'bg-green-600 text-white cursor-default'
+                            : 'bg-blue-600 hover:bg-blue-700 text-white'}`}
+                >
+                    <ShoppingCartIcon className="h-4 w-4" />
+                    {isInCartMap[modalidad] ? 'Agregada' : 'Agregar al carrito'}
+                </button>
+            </div>
+        </CardHead>
+        <CardContent>
+            <div className="space-y-3 w-full">
+                {loading ? (
+                    <Loader />
+                ) : (
+                    eventos.map(partido => (
+                        <div key={partido.idEvent}>
+                            <ItemComponent
+                                item={partido}
+                            />
+                        </div>
+                    ))
+                )}
+            </div>
+        </CardContent>
     </>
-);
-
-// Componente para el tipo de apuesta de Marcador Exacto
-const MarcadorExacto = ({ partidos }: { partidos: Partido[] }) => (
-    <div className="space-y-3 w-full">
-        {partidos.map(partido => (
-            <Card key={partido.id} className="p-3 mb-3 w-full">
-                <PartidoInfo partido={partido} />
-
-                <div className="flex items-center justify-center gap-2 mt-2">
-                    <input
-                        type="number"
-                        min="0"
-                        className="w-14 text-center border rounded p-1"
-                        placeholder="0"
-                    />
-                    <span>-</span>
-                    <input
-                        type="number"
-                        min="0"
-                        className="w-14 text-center border rounded p-1"
-                        placeholder="0"
-                    />
-                </div>
-            </Card>
-        ))}
-    </div>
-);
-
-// Componente para el tipo de apuesta de Resultado General
-const ResultadoGeneral = ({ partidos }: { partidos: Partido[] }) => (
-    <div className="space-y-3 w-full">
-        {partidos.map(partido => (
-            <Card key={partido.id} className="p-3 mb-3 w-full">
-                <PartidoInfo partido={partido} />
+));
 
 
-            </Card>
-        ))}
-    </div>
-);
+const QuinielaArmar = () => {
+    //Parametros de la URL
+    const { id } = useParams<{ id: string }>();
+    //Hooks
+    const { getQuinielaById, quiniela } = useQuiniela();
+    const { eventos,getEventosByIds } = useDeportes();
+    const { addItemToCart, isItemInCart } = useCarrito();
+    // Estados locales
+    const [loading, setLoading] = useState(true);
+    const [message, setMessage] = useState({ text: "", type: "" });
 
-// Componente para el tipo de apuesta de Primero en Marcar
-const PrimeroEnMarcar = ({ partidos }: { partidos: Partido[] }) => (
-    <div className="space-y-3 w-full">
-        {partidos.map(partido => (
-            <Card key={partido.id} className="p-3 mb-3 w-full">
-                <PartidoInfo partido={partido} />
+    const [isInCartMap, setIsInCartMap] = useState<Record<string, boolean>>({});
+    const [prediccionesPorModalidad, setPrediccionesPorModalidad] = useState<Record<string, PrediccionPost[]>>({});
 
-                <select className="w-full mt-2 border rounded p-2">
-                    <option value="">Primero en marcar</option>
-                    <option value="local">{partido.local}</option>
-                    <option value="visitante">{partido.visitante}</option>
-                    <option value="ninguno">Ningún gol</option>
-                </select>
-            </Card>
-        ))}
-    </div>
-);
+    // Cargar predicciones cuando se tienen eventos
+    useEffect(() => {
+        if (eventos?.length > 0) {
+            const prediccionesBase = eventos.map(evento => ({
+                idEvento: evento.idEvent,
+                strTipoPrediccion: "",
+                intResultadoLocal: 0,
+                intResultadoVisitante: 0,
+                strRangoLocal: '',
+                strRangoVisitante: '',
+                idGanador: 0,
+                idPrimeroEnMarcar: 0,
+                strDiferenciaDeGoles: '',
+                intTotalGoles: 0
+            }));
 
-// Componente para el tipo de apuesta de Número de Goles
-const NumeroDeGoles = ({ partidos }: { partidos: Partido[] }) => (
-    <div className="space-y-3 w-full">
-        {partidos.map(partido => (
-            <Card key={partido.id} className="p-3 mb-3 w-full">
-                <PartidoInfo partido={partido} />
+            const initialPredictions: Record<string, PrediccionPost[]> = {};
 
-                <select className="w-full mt-2 border rounded p-2">
-                    <option value="">Total de goles</option>
-                    <option value="0">0 goles</option>
-                    <option value="1">1 gol</option>
-                    <option value="2">2 goles</option>
-                    <option value="3">3 goles</option>
-                    <option value="4">4 goles</option>
-                    <option value="5+">5 o más</option>
-                </select>
-            </Card>
-        ))}
-    </div>
-);
+            // Inicializa predicciones para cada modalidad
+            tabContents.forEach(tab => {
+                initialPredictions[tab.value] = prediccionesBase.map(p => ({
+                    ...p,
+                    idEvento:Number( p.idEvento),
+                    strTipoPrediccion: tab.value
+                }));
+            });
 
-// Componente para el tipo de apuesta de Diferencia de Gol
-const DiferenciaDeGol = ({ partidos }: { partidos: Partido[] }) => (
-    <div className="space-y-3 w-full">
-        {partidos.map(partido => (
-            <Card key={partido.id} className="p-3 mb-3 w-full">
-                <PartidoInfo partido={partido} />
+            setPrediccionesPorModalidad(initialPredictions);
+            console.log("Predicciones por modalidad:", initialPredictions);
+            
+        }
+    }, [eventos]);
 
-                <select className="w-full mt-2 border rounded p-2">
-                    <option value="">Diferencia de goles</option>
-                    <option value="local-3+">Local +3</option>
-                    <option value="local-2">Local +2</option>
-                    <option value="local-1">Local +1</option>
-                    <option value="empate">Empate</option>
-                    <option value="visitante-1">Visitante +1</option>
-                    <option value="visitante-2">Visitante +2</option>
-                    <option value="visitante-3+">Visitante +3</option>
-                </select>
-            </Card>
-        ))}
-    </div>
-);
+    // Cargar datos de quiniela y eventos
+    useEffect(() => {
+        const fetchQuinielaData = async () => {
+            if (!id) return;
 
-// Componente para el tipo de apuesta de Rango Resultado
-const RangoResultado = ({ partidos }: { partidos: Partido[] }) => (
-    <div className="space-y-3 w-full">
-        {partidos.map(partido => (
-            <Card key={partido.id} className="p-3 mb-3 w-full">
-                <PartidoInfo partido={partido} />
+            try {
+                await getQuinielaById(Number(id));
 
-                <div className="grid grid-cols-2 gap-2 mt-2">
-                    <select className="border rounded p-2">
-                        <option value="">Local</option>
-                        <option value="0">0 goles</option>
-                        <option value="1-2">1-2 goles</option>
-                        <option value="3+">3+ goles</option>
-                    </select>
-                    <select className="border rounded p-2">
-                        <option value="">Visitante</option>
-                        <option value="0">0 goles</option>
-                        <option value="1-2">1-2 goles</option>
-                        <option value="3+">3+ goles</option>
-                    </select>
-                </div>
-            </Card>
-        ))}
-    </div>
-);
+                if (quiniela?.eventos) {
+                    const ids = (quiniela.eventos as unknown as EventResponseApi[])
+                        .map((evento) => evento.idEvento)
+                        .map(String);
+                    console.log("IDs de eventos:", ids);
 
-const QuienielaArmar = () => {
+                    await getEventosByIds(ids);
+                }
+            } catch (error) {
+                console.error("Error al cargar la quiniela:", error);
+                setMessage({ text: "Error al cargar la quiniela", type: "error" });
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchQuinielaData();
+    }, [id]);
+
+    // Inicializar el mapa de estado del carrito
+    useEffect(() => {
+        if (id) {
+            const cartMap: Record<string, boolean> = {};
+            tabContents.forEach(tab => {
+                // Componer un ID único para cada modalidad de quiniela
+                const modalidadId = `${id}-${tab.value}`;
+                cartMap[tab.value] = isItemInCart ? isItemInCart(Number(modalidadId)) : false;
+            });
+            setIsInCartMap(cartMap);
+        }
+    }, [id]);
+
+    // Memoizar función para agregar al carrito una modalidad específica
+    const handleAddToCart = useCallback((modalidad: string) => {
+        if (!quiniela || !prediccionesPorModalidad[modalidad]) return;
+
+        // Crea un ID único para cada modalidad de quiniela
+        const modalidadId = `${quiniela.idQuiniela || Number(id)}-${modalidad}`;
+
+        const quinielaForCart: QuinielaPostType = {
+            nombreQuiniela: quiniela.nombreQuiniela,
+            fechaFin: quiniela.fechaFin,
+            precioParticipacion: quiniela.precioParticipacion,
+            idQuiniela: Number(id),
+            idUsuario: 1,
+            predicciones: prediccionesPorModalidad[modalidad],
+            tipoApuesta: modalidad
+        };
+
+        addItemToCart(quinielaForCart);
+
+        // Actualiza el estado para esta modalidad específica
+        setIsInCartMap(prev => ({
+            ...prev,
+            [modalidad]: true
+        }));
+
+        setMessage({ text: `¡Quiniela ${modalidad.replace('_', ' ')} añadida al carrito!`, type: "success" });
+        setTimeout(() => setMessage({ text: "", type: "" }), 3000);
+    }, [quiniela, id, prediccionesPorModalidad, addItemToCart]);
+
     return (
-        <main className="px-4 max-w-[1600px] w-full space-y-4">
+        <section className="px-4 max-w-[1600px] w-full space-y-4">
             <header className="space-y-4 pt-6 mb-8">
                 <div className="flex justify-between items-center mb-8">
-                    <button className=" flex items-center gap-5 ms-5">
-                        <i className="text-gray-900">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8" />
-                            </svg>
-                        </i>
+                    <Link to={USER_ROUTES.QUINIELAS_LIST} className="flex items-center gap-5 ms-5">
+                        <ArrowLongLeftIcon className="h-6 w-6 text-gray-500" />
                         <label>Regresar a las quinielas</label>
-                    </button>
-                    <label className="text-gray-700 hover:text-blue-400 hover:underline">¿Cómo se juega a Quiniela?</label>
+                    </Link>
+                    <label className="text-gray-700 hover:text-blue-400 hover:underline">
+                        ¿Cómo se juega a Quiniela?
+                    </label>
                 </div>
 
-                <h1 className="text-3xl">Liga Española - Jornada 28</h1>
-                <div className="flex justify-start gap-10">
-                    <div className="text-gray-500 flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-calendar" viewBox="0 0 16 16">
-                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-                        </svg>
-                        <span className="text-gray-500 font-semibold"> Cierra en: <span className="border rounded-md p-1 border-gray-300">5 horas restantes</span></span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="text-amber-400 bi bi-trophy text-lg" viewBox="0 0 16 16">
-                            <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5q0 .807-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33 33 0 0 1 2.5.5m.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935m10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935M3.504 1q.01.775.056 1.469c.13 2.028.457 3.546.87 4.667C5.294 9.48 6.484 10 7 10a.5.5 0 0 1 .5.5v2.61a1 1 0 0 1-.757.97l-1.426.356a.5.5 0 0 0-.179.085L4.5 15h7l-.638-.479a.5.5 0 0 0-.18-.085l-1.425-.356a1 1 0 0 1-.757-.97V10.5A.5.5 0 0 1 9 10c.516 0 1.706-.52 2.57-2.864.413-1.12.74-2.64.87-4.667q.045-.694.056-1.469z" />
-                        </svg>
-                        <span className="text-gray-500 font-semibold"> Premio: $100,000</span>
-                    </div>
-                    <div className="text-gray-500 flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-people" viewBox="0 0 16 16">
-                            <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4" />
-                        </svg>
-                        <span className="text-gray-500 font-semibold">Participantes: 24,563</span>
-                    </div>
-                    <div className="text-gray-500 flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-coin" viewBox="0 0 16 16">
-                            <path d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518z" />
-                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                            <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11m0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12" />
-                        </svg>
-                        <span className="text-gray-500 font-semibold">Precio por apuesta: $15.00</span>
-                    </div>
+                <div className="flex justify-between items-center">
+                    <h1 className="text-3xl">
+                        {quiniela?.nombreQuiniela}
+                    </h1>
                 </div>
+
+                <Message text={message.text} type={message.type} />
+
+                <QuinielaInfo quiniela={quiniela} />
             </header>
 
             <Tabs defaultValue="marcador_exacto">
                 <TabsList className="mb-6">
-                    <TabsTrigger value="marcador_exacto">Marcador Exacto</TabsTrigger>
-                    <TabsTrigger value="primero_en_marcar">Primero en Marcar</TabsTrigger>
-                    <TabsTrigger value="resultado_general">Resultado General</TabsTrigger>
-                    <TabsTrigger value="numero_de_gol">Número de Goles</TabsTrigger>
-                    <TabsTrigger value="diferencia_de_gol">Diferencia de Gol</TabsTrigger>
-                    <TabsTrigger value="rango_resultado">Rango Resultado</TabsTrigger>
+                    {tabContents.map(tab => (
+                        <TabsTrigger key={tab.value} value={tab.value}>
+                            {tab.title}
+                        </TabsTrigger>
+                    ))}
                 </TabsList>
 
-                <TabsContent value="marcador_exacto">
-                    <CardHead>
-                        <CardHeader>Marcador exacto</CardHeader>
-                        <CardDescription className="text-sm text-blue-800">
-                            Predice el resultado exacto de cada partido. Obtienes puntos solo si aciertas el marcador final.
-                        </CardDescription>
-                    </CardHead>
-                    <CardContent>
-                        <MarcadorExacto partidos={quinielas.partidos} />
-                    </CardContent>
-                </TabsContent>
-
-                <TabsContent value="primero_en_marcar">
-                    <CardHead>
-                        <CardHeader>Primero en Marcar</CardHeader>
-                        <CardDescription className="text-sm text-blue-800">
-                            Predice qué equipo anotará el primer gol en cada partido.
-                        </CardDescription>
-                    </CardHead>
-                    <CardContent>
-                        <PrimeroEnMarcar partidos={quinielas.partidos} />
-                    </CardContent>
-                </TabsContent>
-
-                <TabsContent value="resultado_general">
-                    <CardHead>
-                        <CardHeader>Resultado General</CardHeader>
-                        <CardDescription className="text-sm text-blue-800">
-                            Predice si el partido terminará en victoria local, empate o victoria visitante.
-                        </CardDescription>
-                    </CardHead>
-                    <CardContent>
-                        <ResultadoGeneral partidos={quinielas.partidos} />
-                    </CardContent>
-                </TabsContent>
-
-                <TabsContent value="numero_de_gol">
-                    <CardHead>
-                        <CardHeader>Número de Goles</CardHeader>
-                        <CardDescription className="text-sm text-blue-800">
-                            Predice el número total de goles que se anotarán en cada partido.
-                        </CardDescription>
-                    </CardHead>
-                    <CardContent>
-                        <NumeroDeGoles partidos={quinielas.partidos} />
-                    </CardContent>
-                </TabsContent>
-
-                <TabsContent value="diferencia_de_gol">
-                    <CardHead>
-                        <CardHeader>Diferencia de Gol</CardHeader>
-                        <CardDescription className="text-sm text-blue-800">
-                            Predice la diferencia de goles entre los equipos al final del partido.
-                        </CardDescription>
-                    </CardHead>
-                    <CardContent>
-                        <DiferenciaDeGol partidos={quinielas.partidos} />
-                    </CardContent>
-                </TabsContent>
-
-                <TabsContent value="rango_resultado">
-                    <CardHead>
-                        <CardHeader>Rango Resultado</CardHeader>
-                        <CardDescription className="text-sm text-blue-800">
-                            Predice el rango de goles para cada equipo (0, 1-2, 3+).
-                        </CardDescription>
-                    </CardHead>
-                    <CardContent>
-                        <RangoResultado partidos={quinielas.partidos} />
-                    </CardContent>
-                </TabsContent>
+                {tabContents.map(tab => (
+                    <TabsContent key={tab.value} value={tab.value}>
+                        <EventosTab
+                            loading={loading}
+                            eventos={eventos}
+                            title={tab.title}
+                            description={tab.description}
+                            ItemComponent={tab.component}
+                            modalidad={tab.value}
+                            onAddToCart={handleAddToCart}
+                            isInCartMap={isInCartMap}
+                        />
+                    </TabsContent>
+                ))}
             </Tabs>
-        </main>
+        </section>
     );
 };
 
-export default QuienielaArmar;
+export default QuinielaArmar;

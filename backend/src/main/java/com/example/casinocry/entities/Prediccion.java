@@ -34,8 +34,8 @@ public abstract class Prediccion {
     private UsuarioQuiniela usuarioQuiniela;
 
     @ManyToOne
-    @JoinColumn(name = "id_partido", nullable = false)
-    private Partido partido;
+    @JoinColumn(name = "id_evento", nullable = false)
+    private Evento evento;
 
     private Boolean esDoble = false;
     private Boolean esTriple = false;

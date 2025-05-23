@@ -1,0 +1,18 @@
+package com.example.casinocry.dto.request;
+
+import java.util.List;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
+public class ArmarQuinielaRequest {
+    private Long idQuiniela;
+    private Long idUsuario;
+    private Long idEvento;
+    private boolean esDoble;
+    private boolean esTriple;
+
+    private List<PrediccionDTO> predicciones;
+}

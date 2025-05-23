@@ -13,14 +13,15 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UsuarioQuinielaId implements Serializable {
-     @Column(name = "id_usuario")
+    @Column(name = "id_usuario")
     private Long idUsuario;
     @Column(name = "id_quiniela")
     private Long idQuiniela;
 
-    public UsuarioQuinielaId() {}
+    public UsuarioQuinielaId() {
+    }
 
-    UsuarioQuinielaId(Long idUsuario, Long idQuiniela) {
+    public UsuarioQuinielaId(Long idUsuario, Long idQuiniela) {
         this.idUsuario = idUsuario;
         this.idQuiniela = idQuiniela;
     }
@@ -40,5 +41,5 @@ public class UsuarioQuinielaId implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(idUsuario, idQuiniela);
-    } 
+    }
 }
